@@ -344,7 +344,6 @@ GEM
     hcaptcha (7.1.0)
       json
     highline (2.1.0)
-    hiredis (0.6.3)
     hkdf (0.3.0)
     htmlentities (4.3.4)
     http (5.1.1)
@@ -857,7 +856,6 @@ DEPENDENCIES
   haml-rails (~> 2.0)
   haml_lint
   hcaptcha (~> 7.1)
-  hiredis (~> 0.6)
   htmlentities (~> 4.3)
   http (~> 5.1)
   http_accept_language (~> 2.1)
