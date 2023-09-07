@@ -58,7 +58,7 @@ ENV DEBIAN_FRONTEND="noninteractive" \
 # Ignoring these here since we don't want to pin any versions and the Debian image removes apt-get content after use
 # hadolint ignore=DL3008,DL3009
 # Add Debian Multimedia Repo
-RUN apt-get update && apt-get -y --no-install-recommends install curl wget ca-certificates && wget https://cdn.vmst.io/deb/deb-multimedia-keyring_2016.8.1_all.deb && dpkg -i deb-multimedia-keyring_2016.8.1_all.deb && rm -f deb-multimedia-keyring_2016.8.1_all.deb && echo \"deb https://mirror.csclub.uwaterloo.ca/debian-multimedia/ bookworm main non-free\" | tee /etc/apt/sources.list.d/deb-mm.list >/dev/null
+RUN apt-get update && apt-get -y --no-install-recommends install curl wget ca-certificates && wget https://cdn.vmst.io/deb/deb-multimedia-keyring_2016.8.1_all.deb && dpkg -i deb-multimedia-keyring_2016.8.1_all.deb && rm -f deb-multimedia-keyring_2016.8.1_all.deb && echo "deb https://mirror.csclub.uwaterloo.ca/debian-multimedia/ bookworm main non-free" | tee /etc/apt/sources.list.d/deb-mm.list >/dev/null
 RUN apt-get update && \
     echo "Etc/UTC" > /etc/localtime && \
     groupadd -g "${GID}" mastodon && \
