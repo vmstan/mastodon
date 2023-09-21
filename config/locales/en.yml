@@ -1734,6 +1734,9 @@ en:
     contrast: Mastodon (High contrast)
     default: Mastodon (Dark)
     mastodon-light: Mastodon (Light)
+    mastodon-bird-ui-dark: Elephant (Dark)
+    mastodon-bird-ui-light: Elephant (Light)
+    mastodon-bird-ui-contrast: Elephant (High contrast)
   time:
     formats:
       default: "%b %d, %Y, %H:%M"
