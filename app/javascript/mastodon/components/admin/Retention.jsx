@@ -8,6 +8,16 @@ import classNames from 'classnames';
 import api from 'mastodon/api';
 import { roundTo10 } from 'mastodon/utils/numbers';
 
+const dateForCohort = cohort => {
+  const timeZone = 'UTC';
+  switch(cohort.frequency) {
+  case 'day':
+    return <FormattedDate value={cohort.period} month='long' day='2-digit' timeZone={timeZone} />;
+  default:
+    return <FormattedDate value={cohort.period} month='long' year='numeric' timeZone={timeZone} />;
+  }
+};
+
 export default class Retention extends PureComponent {
 
   static propTypes = {
@@ -32,21 +42,6 @@ export default class Retention extends PureComponent {
     }).catch(err => {
       console.error(err);
     });
-  }
-
-  extractTimeZone = (dateTime) => {
-    const match = dateTime.match(/([+-][0-9]{2}:[0-9]{2})/);
-    return match ? `UTC${match[1]}` : 'UTC';
-  }
-
-  dateForCohort = (cohort) => {
-    const timeZone = this.extractTimeZone(cohort.period);
-    switch (cohort.frequency) {
-      case 'day':
-        return <FormattedDate value={cohort.period} month='long' day='2-digit' timeZone={timeZone} />;
-      default:
-        return <FormattedDate value={cohort.period} month='long' year='numeric' timeZone={timeZone} />;
-    }
   }
 
   render () {
