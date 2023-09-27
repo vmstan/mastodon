@@ -8,7 +8,7 @@ module Admin
       authorize :dashboard, :index?
 
       @system_checks         = Admin::SystemCheck.perform(current_user)
-      @time_period           = (29.days.ago.to_date...Time.now.utc.to_date)
+      @time_period           = (29.days.ago.to_date...Time.now.utc.to_datetime)
       @pending_users_count   = User.pending.count
       @pending_reports_count = Report.unresolved.count
       @pending_tags_count    = Tag.pending_review.count
