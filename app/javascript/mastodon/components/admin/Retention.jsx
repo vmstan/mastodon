@@ -9,7 +9,7 @@ import api from 'mastodon/api';
 import { roundTo10 } from 'mastodon/utils/numbers';
 
 const dateForCohort = cohort => {
-  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const timeZone = 'UTC';
   switch(cohort.frequency) {
   case 'day':
     return <FormattedDate value={cohort.period} month='long' day='2-digit' timeZone={timeZone} />;
