@@ -7,9 +7,10 @@ import classNames from 'classnames';
 
 import api from 'mastodon/api';
 import { roundTo10 } from 'mastodon/utils/numbers';
+import server from 'mastodon/reducers/server';
 
 const dateForCohort = cohort => {
-  const timeZone = 'UTC';
+  const timeZone = server_time_zone || 'UTC';
   switch(cohort.frequency) {
   case 'day':
     return <FormattedDate value={cohort.period} month='long' day='2-digit' timeZone={timeZone} />;
@@ -24,6 +25,7 @@ export default class Retention extends PureComponent {
     start_at: PropTypes.string,
     end_at: PropTypes.string,
     frequency: PropTypes.string,
+    server_time_zone: PropTypes.string,
   };
 
   state = {
@@ -46,7 +48,7 @@ export default class Retention extends PureComponent {
 
   render () {
     const { loading, data } = this.state;
-    const { frequency } = this.props;
+    const { frequency, server_time_zone } = this.props;
 
     let content;
 
@@ -110,7 +112,7 @@ export default class Retention extends PureComponent {
               <tr key={cohort.period}>
                 <td>
                   <div className='retention__table__date'>
-                    {dateForCohort(cohort)}
+                    {dateForCohort(cohort, server_time_zone)}
                   </div>
                 </td>
 
