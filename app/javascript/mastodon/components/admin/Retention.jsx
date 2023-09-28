@@ -8,12 +8,14 @@ import classNames from 'classnames';
 import api from 'mastodon/api';
 import { roundTo10 } from 'mastodon/utils/numbers';
 
-const dateForCohort = (cohort, server_timezone) => {
+const dateForCohort = cohort => {
+  const { server_timezone } = this.props;
+  const timeZone = server_timezone || 'UTC'; // Fallback to 'UTC' if server_timezone is not provided  
   switch(cohort.frequency) {
-    case 'day':
-      return <FormattedDate value={cohort.period} month='long' day='2-digit' timeZone={server_timezone} />;
-    default:
-      return <FormattedDate value={cohort.period} month='long' year='numeric' timeZone={server_timezone} />;
+  case 'day':
+    return <FormattedDate value={cohort.period} month='long' day='2-digit' timeZone={timeZone} />;
+  default:
+    return <FormattedDate value={cohort.period} month='long' year='numeric' timeZone={timeZone} />;
   }
 };
 
