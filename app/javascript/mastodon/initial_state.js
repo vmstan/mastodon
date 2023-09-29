@@ -88,6 +88,7 @@
  * @property {Record<string, Account>} accounts
  * @property {InitialStateLanguage[]} languages
  * @property {InitialStateMeta} meta
+ * @property {number} max_toot_chars
  */
 
 const element = document.getElementById('initial-state');
@@ -143,5 +144,7 @@ export const languages = initialState?.languages;
 // @ts-expect-error
 export const statusPageUrl = getMeta('status_page_url');
 export const sso_redirect = getMeta('sso_redirect');
+
+export const maxChars = (initialState && initialState.max_toot_chars) || 500;
 
 export default initialState;
