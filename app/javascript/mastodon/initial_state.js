@@ -147,6 +147,6 @@ export const criticalUpdatesPending = initialState?.critical_updates_pending;
 export const statusPageUrl = getMeta('status_page_url');
 export const sso_redirect = getMeta('sso_redirect');
 
-export const maxChars = (initialState && initialState.max_toot_chars) || 500;
+export const maxChars = initialState?.max_toot_chars || 500;
 
 export default initialState;
