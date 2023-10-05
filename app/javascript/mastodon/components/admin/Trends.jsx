@@ -1,11 +1,14 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import api from 'mastodon/api';
+import { PureComponent } from 'react';
+
 import { FormattedMessage } from 'react-intl';
+
 import classNames from 'classnames';
+
+import api from 'mastodon/api';
 import Hashtag from 'mastodon/components/hashtag';
 
-export default class Trends extends React.PureComponent {
+export default class Trends extends PureComponent {
 
   static propTypes = {
     limit: PropTypes.number.isRequired,
@@ -50,7 +53,7 @@ export default class Trends extends React.PureComponent {
             <Hashtag
               key={hashtag.name}
               name={hashtag.name}
-              href={`/admin/tags/${hashtag.id}`}
+              to={hashtag.id === undefined ? undefined : `/admin/tags/${hashtag.id}`}
               people={hashtag.history[0].accounts * 1 + hashtag.history[1].accounts * 1}
               uses={hashtag.history[0].uses * 1 + hashtag.history[1].uses * 1}
               history={hashtag.history.reverse().map(day => day.uses)}
