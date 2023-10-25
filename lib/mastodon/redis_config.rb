@@ -33,7 +33,7 @@ sidekiq_namespace = namespace
 REDIS_CACHE_PARAMS = {
   url: ENV['CACHE_REDIS_URL'],
   expires_in: 10.minutes,
-  namespace: "#{cache_namespace}:7.1",
+  namespace: cache_namespace,
   connect_timeout: 5,
   pool: {
     size: Sidekiq.server? ? Sidekiq[:concurrency] : Integer(ENV['MAX_THREADS'] || 5),
