@@ -1734,11 +1734,12 @@ en:
     contrast: Mastodon (High contrast)
     default: Mastodon (Dark)
     mastodon-light: Mastodon (Light)
+    mastodon-bird-ui-contrast: Elephant (High contrast)
     mastodon-bird-ui-dark: Elephant (Dark)
     mastodon-bird-ui-light: Elephant (Light)
-    mastodon-bird-ui-contrast: Elephant (High contrast)
     tangerine-ui: Tangerine (Auto)
     tangerine-purple-ui: Tangerine Purple (Auto)
+    tangerine-cherry-ui: Tangerine Cherry (Auto)
   time:
     formats:
       default: "%b %d, %Y, %H:%M"
