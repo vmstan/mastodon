@@ -4,8 +4,8 @@ class AttachmentBatch
   # Maximum amount of objects you can delete in an S3 API call. It's
   # important to remember that this does not correspond to the number
   # of records in the batch, since records can have multiple attachments
-  LIMIT = 100
-  MAX_RETRIES = 3
+  LIMIT = 1000
+  MAX_RETRIES = 10
 
   # Attributes generated and maintained by Paperclip (not all of them
   # are always used on every class, however)
@@ -108,7 +108,7 @@ class AttachmentBatch
     rescue => e
       retries += 1
       if retries < MAX_RETRIES
-        logger.debug "Retry #{retries}/#{MAX_RETRIES}: #{e.message}"
+        logger.debug "Retrying #{retries}/#{MAX_RETRIES}: #{e.message}"
         sleep 2**retries # Exponential backoff
         retry
       else
