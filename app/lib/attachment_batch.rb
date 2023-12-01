@@ -5,7 +5,7 @@ class AttachmentBatch
   # important to remember that this does not correspond to the number
   # of records in the batch, since records can have multiple attachments
   LIMIT = ENV.fetch('S3_BATCH_DELETE_LIMIT', 1000).to_i
-  MAX_RETRIES = ENV.fetch('S3_BATCH_DELETE_RETRIES', 3).to_i
+  MAX_RETRY = ENV.fetch('S3_BATCH_DELETE_RETRY', 3).to_i
 
   # Attributes generated and maintained by Paperclip (not all of them
   # are always used on every class, however)
@@ -107,12 +107,12 @@ class AttachmentBatch
       end
     rescue => e
       retries += 1
-      if retries < MAX_RETRIES
-        logger.debug "Retrying #{retries}/#{MAX_RETRIES}: #{e.message}"
+      if retries < MAX_RETRY
+        logger.debug "Retrying #{retries}/#{MAX_RETRY}: #{e.message}"
         sleep 2**retries # Exponential backoff
         retry
       else
-        logger.error "Batch deletion failed after #{MAX_RETRIES} attempts: #{e.message}"
+        logger.error "Batch deletion failed after #{MAX_RETRY} attempts: #{e.message}"
         raise e
       end
     end
