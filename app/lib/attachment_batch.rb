@@ -112,7 +112,7 @@ class AttachmentBatch
         sleep 2**retries # Exponential backoff
         retry
       else
-        logger.error "Deletion failed after #{MAX_RETRIES} attempts: #{e.message}"
+        logger.error "Batch deletion failed after #{MAX_RETRIES} attempts: #{e.message}"
         raise e
       end
     end
