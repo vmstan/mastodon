@@ -108,11 +108,11 @@ class AttachmentBatch
     rescue => e
       retries += 1
       if retries < MAX_RETRY
-        logger.debug "Retrying #{retries}/#{MAX_RETRY}: #{e.message}"
+        logger.debug "Retry #{retries}/#{MAX_RETRY} after #{e.message}"
         sleep 2**retries # Exponential backoff
         retry
       else
-        logger.error "Batch deletion failed after #{MAX_RETRY} attempts: #{e.message}"
+        logger.error "Batch deletion from S3 failed"
         raise e
       end
     end
