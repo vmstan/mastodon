@@ -5,6 +5,7 @@ class AttachmentBatch
   # important to remember that this does not correspond to the number
   # of records in the batch, since records can have multiple attachments
   LIMIT = 100
+  MAX_RETRIES = 3
 
   # Attributes generated and maintained by Paperclip (not all of them
   # are always used on every class, however)
@@ -95,13 +96,25 @@ class AttachmentBatch
     # objects can be processed at once, so we have to potentially
     # separate them into multiple calls.
 
-    keys.each_slice(LIMIT) do |keys_slice|
-      logger.debug { "Deleting #{keys_slice.size} objects" }
-
-      bucket.delete_objects(delete: {
-        objects: keys_slice.map { |key| { key: key } },
-        quiet: true,
-      })
+    retries = 0
+    begin
+      keys.each_slice(LIMIT) do |keys_slice|
+        logger.debug { "Deleting #{keys_slice.size} objects" }
+        bucket.delete_objects(delete: {
+          objects: keys_slice.map { |key| { key: key } },
+          quiet: true,
+        })
+      end
+    rescue => e
+      retries += 1
+      if retries < MAX_RETRIES
+        logger.debug "Retry #{retries}/#{MAX_RETRIES}: #{e.message}"
+        sleep 2**retries # Exponential backoff
+        retry
+      else
+        logger.error "Deletion failed after #{MAX_RETRIES} attempts: #{e.message}"
+        raise e
+      end
     end
   end
 
