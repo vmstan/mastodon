@@ -4,8 +4,8 @@ class AttachmentBatch
   # Maximum amount of objects you can delete in an S3 API call. It's
   # important to remember that this does not correspond to the number
   # of records in the batch, since records can have multiple attachments
-  LIMIT = 1000
-  MAX_RETRIES = 10
+  LIMIT = ENV.fetch('S3_BATCH_DELETE_LIMIT', 1000).to_i
+  MAX_RETRIES = ENV.fetch('S3_BATCH_DELETE_RETRIES', 3).to_i
 
   # Attributes generated and maintained by Paperclip (not all of them
   # are always used on every class, however)
