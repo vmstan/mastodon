@@ -157,17 +157,23 @@ class LinkDetailsExtractor
 
   def title
     title_str = structured_data&.headline || opengraph_tag('og:title') || document.xpath('//title').map(&:content).first
+    return nil if title_str.nil?
+
     unless title_str.valid_encoding?
       title_str = title_str.encode("UTF-8", invalid: :replace, undef: :replace)
     end
+
     html_entities.decode(title_str)
   end
 
   def description
     desc_str = structured_data&.description || opengraph_tag('og:description') || meta_tag('description')
+    return nil if desc_str.nil?
+
     unless desc_str.valid_encoding?
       desc_str = desc_str.encode("UTF-8", invalid: :replace, undef: :replace)
     end
+
     html_entities.decode(desc_str)
   end
 
@@ -189,9 +195,12 @@ class LinkDetailsExtractor
 
   def provider_name
     provider_name_str = structured_data&.publisher_name || opengraph_tag('og:site_name')
+    return nil if provider_name.nil?
+
     unless provider_name_str.valid_encoding?
       provider_name_str = provider_name_str.encode("UTF-8", invalid: :replace, undef: :replace)
     end
+
     html_entities.decode(provider_name_str)
   end
 
@@ -201,9 +210,12 @@ class LinkDetailsExtractor
 
   def author_name
     author_name_str = structured_data&.author_name || opengraph_tag('og:author') || opengraph_tag('og:author:username')
+    return nil if author_name.nil?
+
     unless author_name_str.valid_encoding?
       author_name_str = author_name_str.encode("UTF-8", invalid: :replace, undef: :replace)
     end
+
     html_entities.decode(author_name_str)
   end
 
