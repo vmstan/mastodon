@@ -155,12 +155,21 @@ class LinkDetailsExtractor
     opengraph_tag('twitter:player:height')
   end
 
+  def get_encoding
+    document.at('meta[charset]')&.[]('charset')
+  end
+
+  def decode_html(str)
+    encoding = get_encoding || 'UTF-8'
+    html_entities.decode(str.force_encoding(encoding))
+  end
+
   def title
-    html_entities.decode(structured_data&.headline || opengraph_tag('og:title') || document.xpath('//title').map(&:content).first)
+    decode_html(structured_data&.headline || opengraph_tag('og:title') || document.xpath('//title').map(&:content).first)
   end
 
   def description
-    html_entities.decode(structured_data&.description || opengraph_tag('og:description') || meta_tag('description'))
+    decode_html(structured_data&.description || opengraph_tag('og:description') || meta_tag('description'))
   end
 
   def published_at
@@ -180,7 +189,7 @@ class LinkDetailsExtractor
   end
 
   def provider_name
-    html_entities.decode(structured_data&.publisher_name || opengraph_tag('og:site_name'))
+    decode_html(structured_data&.publisher_name || opengraph_tag('og:site_name'))
   end
 
   def provider_url
@@ -188,7 +197,7 @@ class LinkDetailsExtractor
   end
 
   def author_name
-    html_entities.decode(structured_data&.author_name || opengraph_tag('og:author') || opengraph_tag('og:author:username'))
+    decode_html(structured_data&.author_name || opengraph_tag('og:author') || opengraph_tag('og:author:username'))
   end
 
   def author_url
