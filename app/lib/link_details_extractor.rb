@@ -195,7 +195,7 @@ class LinkDetailsExtractor
 
   def provider_name
     provider_name_str = structured_data&.publisher_name || opengraph_tag('og:site_name')
-    return nil if provider_name.nil?
+    return nil if provider_name_str.nil?
 
     unless provider_name_str.valid_encoding?
       provider_name_str = provider_name_str.encode("UTF-8", invalid: :replace, undef: :replace)
@@ -210,7 +210,7 @@ class LinkDetailsExtractor
 
   def author_name
     author_name_str = structured_data&.author_name || opengraph_tag('og:author') || opengraph_tag('og:author:username')
-    return nil if author_name.nil?
+    return nil if author_name_str.nil?
 
     unless author_name_str.valid_encoding?
       author_name_str = author_name_str.encode("UTF-8", invalid: :replace, undef: :replace)
