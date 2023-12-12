@@ -155,21 +155,20 @@ class LinkDetailsExtractor
     opengraph_tag('twitter:player:height')
   end
 
-  def get_encoding
-    document.at('meta[charset]')&.[]('charset')
-  end
-
-  def decode_html(str)
-    encoding = get_encoding || 'UTF-8'
-    html_entities.decode(str.force_encoding(encoding))
-  end
-
   def title
-    decode_html(structured_data&.headline || opengraph_tag('og:title') || document.xpath('//title').map(&:content).first)
+    title_str = structured_data&.headline || opengraph_tag('og:title') || document.xpath('//title').map(&:content).first
+    unless title_str.valid_encoding?
+      title_str = title_str.encode("UTF-8", invalid: :replace, undef: :replace)
+    end
+    html_entities.decode(title_str)
   end
 
   def description
-    decode_html(structured_data&.description || opengraph_tag('og:description') || meta_tag('description'))
+    desc_str = structured_data&.description || opengraph_tag('og:description') || meta_tag('description')
+    unless desc_str.valid_encoding?
+      desc_str = desc_str.encode("UTF-8", invalid: :replace, undef: :replace)
+    end
+    html_entities.decode(desc_str)
   end
 
   def published_at
@@ -189,7 +188,11 @@ class LinkDetailsExtractor
   end
 
   def provider_name
-    decode_html(structured_data&.publisher_name || opengraph_tag('og:site_name'))
+    provider_name_str = structured_data&.publisher_name || opengraph_tag('og:site_name')
+    unless provider_name_str.valid_encoding?
+      provider_name_str = provider_name_str.encode("UTF-8", invalid: :replace, undef: :replace)
+    end
+    html_entities.decode(provider_name_str)
   end
 
   def provider_url
@@ -197,7 +200,11 @@ class LinkDetailsExtractor
   end
 
   def author_name
-    decode_html(structured_data&.author_name || opengraph_tag('og:author') || opengraph_tag('og:author:username'))
+    author_name_str = structured_data&.author_name || opengraph_tag('og:author') || opengraph_tag('og:author:username')
+    unless author_name_str.valid_encoding?
+      author_name_str = author_name_str.encode("UTF-8", invalid: :replace, undef: :replace)
+    end
+    html_entities.decode(author_name_str)
   end
 
   def author_url
