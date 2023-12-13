@@ -97,7 +97,8 @@ RUN \
     curl \
     # ffmpeg \
     file \
-    imagemagick \
+    # imagemagick \
+    libtiff6 libwebpdemux2 libwebpmux3 libpng16-16 \
     libjemalloc2 \
     patchelf \
     procps \
@@ -114,6 +115,8 @@ RUN \
 # Import FFmpeg
 COPY --from=mwader/static-ffmpeg:latest /ffmpeg /usr/local/bin/
 COPY --from=mwader/static-ffmpeg:latest /ffprobe /usr/local/bin/
+# Import ImageMagick
+COPY --from=vmstan/imagemagick:latest /usr/local/bin/ /usr/local/bin/
 
 # Create temporary build layer from base image
 FROM ruby as build
