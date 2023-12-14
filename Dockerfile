@@ -98,7 +98,7 @@ RUN \
     # ffmpeg \
     file \
     # imagemagick \
-    libtiff6 libwebpdemux2 libwebpmux3 libpng16-16 libheif1 \
+    libtiff6 libwebpdemux2 libwebpmux3 libpng16-16 libheif1 libxml2 \
     libjemalloc2 \
     patchelf \
     procps \
