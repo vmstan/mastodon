@@ -117,6 +117,8 @@ COPY --from=mwader/static-ffmpeg:latest /ffmpeg /usr/local/bin/
 COPY --from=mwader/static-ffmpeg:latest /ffprobe /usr/local/bin/
 # Import ImageMagick
 COPY --from=vmstan/imagemagick:latest /usr/local/bin/ /usr/local/bin/
+COPY --from=vmstan/imagemagick:latest /usr/local/etc/ /usr/local/etc/
+COPY --from=vmstan/imagemagick:latest /usr/local/lib/ /usr/local/lib/
 
 # Create temporary build layer from base image
 FROM ruby as build
