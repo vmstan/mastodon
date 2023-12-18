@@ -97,7 +97,7 @@ RUN \
     curl \
     # ffmpeg \
     file \
-    graphicsmagick-imagemagick-compat \
+    imagemagick \
     libjemalloc2 \
     patchelf \
     procps \
