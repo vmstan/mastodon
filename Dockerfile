@@ -58,7 +58,7 @@ ENV \
   RAILS_ENV="production" \
 # Add Ruby and Mastodon installation to the PATH
   DEBIAN_FRONTEND="noninteractive" \
-  PATH="${PATH}:/opt/ruby/bin:/opt/mastodon/bin" \
+  PATH="${PATH}:/opt/ruby/bin:/opt/mastodon/bin:/opt/imagemagick/bin" \
 # Optimize jemalloc 5.x performance
   MALLOC_CONF="narenas:2,background_thread:true,thp:never,dirty_decay_ms:1000,muzzy_decay_ms:0"
 
@@ -97,7 +97,7 @@ RUN \
     curl \
     # ffmpeg \
     file \
-    imagemagick \
+    libtiff6 libwebpdemux2 libwebpmux3 libpng16-16 libheif1 libxml2 \
     libjemalloc2 \
     patchelf \
     procps \
@@ -114,6 +114,8 @@ RUN \
 # Import FFmpeg
 COPY --from=mwader/static-ffmpeg:latest /ffmpeg /usr/local/bin/
 COPY --from=mwader/static-ffmpeg:latest /ffprobe /usr/local/bin/
+# Import ImageMagick
+COPY --from=vmstan/imagemagick:latest /opt/ /opt/
 
 # Create temporary build layer from base image
 FROM ruby as build
