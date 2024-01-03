@@ -18,7 +18,7 @@ module Attachmentable
     audio/vorbis
     audio/opus
     video/ogg
-    # video/webm
+    video/webm
   ).freeze
 
   included do
@@ -75,7 +75,13 @@ module Attachmentable
   end
 
   def calculated_content_type(attachment)
-    Paperclip.run('file', '-b --mime :file', file: attachment.queued_for_write[:original].path).split(/[:;\s]+/).first.chomp
+    original_content_type = Paperclip.run('file', '-b --mime :file', file: attachment.queued_for_write[:original].path).split(/[:;\s]+/).first.chomp
+
+    if original_content_type == 'video/webm'
+      original_content_type = Marcel::MimeType.for(Pathname.new(attachment.queued_for_write[:original].path))
+    end
+
+    original_content_type
   rescue Terrapin::CommandLineError
     ''
   end
