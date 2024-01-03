@@ -18,7 +18,7 @@ module Attachmentable
     audio/vorbis
     audio/opus
     video/ogg
-    video/webm
+    # video/webm
   ).freeze
 
   included do
