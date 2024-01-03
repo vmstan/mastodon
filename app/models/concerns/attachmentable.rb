@@ -78,7 +78,9 @@ module Attachmentable
     original_content_type = Paperclip.run('file', '-b --mime :file', file: attachment.queued_for_write[:original].path).split(/[:;\s]+/).first.chomp
 
     if original_content_type == 'video/webm'
-      original_content_type = Marcel::MimeType.for(Pathname.new(attachment.queued_for_write[:original].path))
+      streams = JSON.parse(`ffprobe -v quiet -print_format json -show_streams #{attachment.queued_for_write[:original].path}`)
+      has_video = streams['streams'].any? { |stream| stream['codec_type'] == 'video' }
+      original_content_type = 'audio/webm' unless has_video
     end
 
     original_content_type
