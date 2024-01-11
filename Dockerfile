@@ -60,7 +60,7 @@ ENV \
   DEBIAN_FRONTEND="noninteractive" \
   PATH="${PATH}:/opt/ruby/bin:/opt/mastodon/bin" \
 # Optimize jemalloc 5.x performance
-  MALLOC_CONF="narenas:2,background_thread:true,thp:never,dirty_decay_ms:1000,muzzy_decay_ms:0"
+  MALLOC_CONF="narenas:2,background_thread:true,dirty_decay_ms:1000"
 
 # Set default shell used for running commands
 SHELL ["/bin/bash", "-o", "pipefail", "-o", "errexit", "-c"]
