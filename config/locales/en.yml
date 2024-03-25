@@ -1731,15 +1731,15 @@ en:
   tags:
     does_not_match_previous_name: does not match the previous name
   themes:
-    contrast: Mastodon (High contrast)
-    default: Mastodon (Dark)
-    mastodon-light: Mastodon (Light)
     mastodon-bird-ui-contrast: Elephant (High contrast)
     mastodon-bird-ui-dark: Elephant (Dark)
     mastodon-bird-ui-light: Elephant (Light)
     tangerine-ui: Tangerine (Auto)
     tangerine-purple-ui: Tangerine Purple (Auto)
     tangerine-cherry-ui: Tangerine Cherry (Auto)
+    contrast: Mastodon (High contrast)
+    default: Mastodon (Dark)
+    mastodon-light: Mastodon (Light)
   time:
     formats:
       default: "%b %d, %Y, %H:%M"
