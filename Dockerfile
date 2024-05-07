@@ -159,6 +159,7 @@ RUN \
     libwebp-dev \
     libheif-dev \
     libgirepository1.0-dev \
+    libimagequant-dev \
     liborc-dev \
   ;
 
@@ -280,6 +281,7 @@ RUN \
     libwebpmux3 \
     libwebpdemux2 \
     libheif1 \
+    libimagequant0 \
     liborc-0.4-0 \
   ;
 
