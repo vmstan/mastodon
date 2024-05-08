@@ -133,6 +133,7 @@ RUN \
   apt-get install -y --no-install-recommends \
     build-essential \
     git \
+    libglib2.0-dev \
     libgdbm-dev \
     libgmp-dev \
     libicu-dev \
@@ -142,7 +143,6 @@ RUN \
     meson \
     pkg-config \
     shared-mime-info \
-    zlib1g-dev \
   # libvips components
     libexpat1-dev \
     # librsvg2-dev \
@@ -259,6 +259,7 @@ RUN \
 --mount=type=cache,id=yarn-cache-${TARGETPLATFORM},target=/usr/local/share/.cache/yarn,sharing=locked \
 # Apt update install non-dev versions of necessary components
   apt-get install -y --no-install-recommends \
+    libglib2.0-0 \
     libssl3 \
     libpq5 \
     libicu72 \
