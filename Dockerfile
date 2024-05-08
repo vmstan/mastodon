@@ -259,6 +259,7 @@ RUN \
 --mount=type=cache,id=yarn-cache-${TARGETPLATFORM},target=/usr/local/share/.cache/yarn,sharing=locked \
 # Apt update install non-dev versions of necessary components
   apt-get install -y --no-install-recommends \
+    libexpat1 \
     libglib2.0-0 \
     libssl3 \
     libpq5 \
