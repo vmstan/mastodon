@@ -145,7 +145,7 @@ RUN \
     zlib1g-dev \
   # libvips components
     libexpat1-dev \
-    librsvg2-dev \
+    # librsvg2-dev \
     libjpeg62-turbo-dev \
     libtiff-dev \
     libspng-dev \
@@ -266,7 +266,7 @@ RUN \
     libreadline8 \
     libyaml-0-2 \
   # libvips components
-    librsvg2-2 \
+    # librsvg2-2 \
     libjpeg62-turbo \
     libtiff6 \
     libspng0 \
