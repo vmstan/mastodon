@@ -131,8 +131,7 @@ RUN \
 --mount=type=cache,id=apt-lib-${TARGETPLATFORM},target=/var/lib/apt,sharing=locked \
 # Install build tools and bundler dependencies from APT
   apt-get install -y --no-install-recommends \
-    g++ \
-    gcc \
+    build-essential \
     git \
     libgdbm-dev \
     libgmp-dev \
@@ -140,14 +139,11 @@ RUN \
     libidn-dev \
     libpq-dev \
     libssl-dev \
-    make \
+    meson \
+    pkg-config \
     shared-mime-info \
     zlib1g-dev \
   # libvips components
-    build-essential \
-    ninja-build \
-    meson \
-    pkg-config \
     libexpat1-dev \
     librsvg2-dev \
     libjpeg62-turbo-dev \
