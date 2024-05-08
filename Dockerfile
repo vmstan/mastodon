@@ -95,7 +95,7 @@ RUN \
   apt-get install -y --no-install-recommends \
     ca-certificates \
     curl \
-    ffmpeg \
+    # ffmpeg \
     file \
     # imagemagick \
     libjemalloc2 \
@@ -294,6 +294,9 @@ COPY --from=build /usr/local/bin/vips* /usr/local/bin
 COPY --from=build /usr/local/lib/libvips* /usr/local/lib
 COPY --from=build /usr/local/lib/vips* /usr/local/lib
 COPY --from=build /usr/local/lib/pkgconfig/vips* /usr/local/lib/pkgconfig
+# Copy ffpmeg components to layer
+COPY --from=mwader/static-ffmpeg:7.0-1 /ffmpeg /usr/local/bin/
+COPY --from=mwader/static-ffmpeg:7.0-1 /ffprobe /usr/local/bin/
 
 ENV LD_LIBRARY_PATH /usr/local/lib
 ENV PKG_CONFIG_PATH /usr/local/lib/pkgconfig
