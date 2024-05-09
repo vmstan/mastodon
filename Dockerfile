@@ -161,6 +161,20 @@ RUN \
     libgirepository1.0-dev \
     libimagequant-dev \
     liborc-dev \
+  # ffmpeg components
+    libaom-dev \
+    libbz2-dev \
+    libdav1d-dev \
+    libdrm-dev \
+    liblzma-dev \
+    libmp3lame-dev \
+    libnuma-dev \
+    libopus-dev \
+    libva-dev \
+    libvorbis-dev \
+    libvpx-dev \
+    libx264-dev \
+    libx265-dev \
   ;
 
 # Vips version to compile, change with [--build-arg VIPS_VERSION="8.15.2"]
@@ -188,62 +202,46 @@ RUN \
 
 FROM build as ffmpeg
 
-RUN apt-get install -y --no-install-recommends \
-    libaom-dev \
-    libbz2-dev \
-    libdav1d-dev \
-    libdrm-dev \
-    liblzma-dev \
-    libmp3lame-dev \
-    libnuma-dev \
-    libopus-dev \
-    libva-dev \
-    libvorbis-dev \
-    libvpx-dev \
-    libx264-dev \
-    libx265-dev \
+ARG FFMPEG_VERSION=7.0
+ARG FFMPEG_URL=https://ffmpeg.org/releases
+
+WORKDIR /usr/local/src
+
+RUN curl -sSL -o ffmpeg-${FFMPEG_VERSION}.tar.xz ${FFMPEG_URL}/ffmpeg-${FFMPEG_VERSION}.tar.xz
+
+RUN tar xf ffmpeg-${FFMPEG_VERSION}.tar.xz \
+  && cd ffmpeg-${FFMPEG_VERSION} \
+  && mkdir -p /opt/ffmpeg \
+  &&  ./configure \
+        --prefix=/opt/ffmpeg \
+        --enable-rpath \
+        --enable-gpl \
+        --enable-version3 \
+        --enable-nonfree \
+        --disable-static \
+        --enable-shared \
+        # Program Options
+        --disable-programs \
+        --enable-ffmpeg \
+        --enable-ffprobe \
+        # Documentation Options
+        --disable-doc \
+        # Component Options
+        --disable-network \
+        # External Library Support
+        --enable-libaom \
+        --enable-libdav1d \
+        --enable-libdrm \
+        --enable-libmp3lame \
+        --enable-libopus \
+        --enable-libvorbis \
+        --enable-libvpx \
+        --enable-libx264 \
+        --enable-libx265 \
+        --enable-vaapi \
+    && make -j$(nproc) \
+    && make install \
   ;
-
-  ARG FFMPEG_VERSION=7.0
-  ARG FFMPEG_URL=https://ffmpeg.org/releases
-
-  WORKDIR /usr/local/src
-
-  RUN curl -sSL -o ffmpeg-${FFMPEG_VERSION}.tar.xz ${FFMPEG_URL}/ffmpeg-${FFMPEG_VERSION}.tar.xz
-
-  RUN tar xf ffmpeg-${FFMPEG_VERSION}.tar.xz \
-    && cd ffmpeg-${FFMPEG_VERSION} \
-    && mkdir -p /opt/ffmpeg \
-    &&  ./configure \
-          --prefix=/opt/ffmpeg \
-          --enable-rpath \
-          --enable-gpl \
-          --enable-version3 \
-          --enable-nonfree \
-          --disable-static \
-          --enable-shared \
-          # Program Options
-          --disable-programs \
-          --enable-ffmpeg \
-          --enable-ffprobe \
-          # Documentation Options
-          --disable-doc \
-          # Component Options
-          --disable-network \
-          # External Library Support
-          --enable-libaom \
-          --enable-libdav1d \
-          --enable-libdrm \
-          --enable-libmp3lame \
-          --enable-libopus \
-          --enable-libvorbis \
-          --enable-libvpx \
-          --enable-libx264 \
-          --enable-libx265 \
-          --enable-vaapi \
-      && make -j$(nproc) \
-      && make install \
-    ;
 
 # Create temporary bundler specific build layer from build layer
 FROM build as bundler
