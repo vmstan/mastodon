@@ -145,7 +145,6 @@ RUN \
     shared-mime-info \
   # libvips components
     libexpat1-dev \
-    # librsvg2-dev \
     libjpeg62-turbo-dev \
     libtiff-dev \
     libspng-dev \
@@ -168,7 +167,7 @@ RUN curl -sSL -o vips-${VIPS_VERSION}.tar.xz ${VIPS_URL}/v${VIPS_VERSION}/vips-$
 
 RUN tar xf vips-${VIPS_VERSION}.tar.xz \
   && cd vips-${VIPS_VERSION} \
-  && meson setup build --libdir=lib -Dintrospection=disabled \
+  && meson setup build --libdir=lib -Dintrospection=disabled -Dmodules=disabled -Dexamples=false \
   && cd build \
   && ninja \
   && ninja install
@@ -268,7 +267,6 @@ RUN \
     libreadline8 \
     libyaml-0-2 \
   # libvips components
-    # librsvg2-2 \
     libjpeg62-turbo \
     libtiff6 \
     libspng0 \
@@ -294,11 +292,16 @@ COPY --from=bundler /usr/local/bundle/ /usr/local/bundle/
 # Copy libvips components to layer
 COPY --from=build /usr/local/bin/vips* /usr/local/bin
 COPY --from=build /usr/local/lib/libvips* /usr/local/lib
-COPY --from=build /usr/local/lib/vips* /usr/local/lib
 COPY --from=build /usr/local/lib/pkgconfig/vips* /usr/local/lib/pkgconfig
 # Copy ffpmeg components to layer
 COPY --from=mwader/static-ffmpeg:7.0-1 /ffmpeg /usr/local/bin/
 COPY --from=mwader/static-ffmpeg:7.0-1 /ffprobe /usr/local/bin/
+# Symlink libvips components
+RUN ln -sf /usr/local/lib/libvips.so.42.17.2 /usr/local/lib/libvips.so.42 && \
+    ln -sf /usr/local/lib/libvips-cpp.so.42.17.2 /usr/local/lib/libvips-cpp.so.42 && \
+    ln -sf /usr/local/lib/libvips-cpp.so.42.17.2 /usr/local/lib/libvips-cpp.so && \
+    ln -sf /usr/local/lib/libvips.so.42.17.2 /usr/local/lib/libvips.so && \
+    ldconfig
 
 ENV LD_LIBRARY_PATH /usr/local/lib
 ENV PKG_CONFIG_PATH /usr/local/lib/pkgconfig
