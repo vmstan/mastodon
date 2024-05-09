@@ -163,12 +163,10 @@ RUN \
     libaom-dev \
     libbz2-dev \
     libdav1d-dev \
-    libdrm-dev \
     liblzma-dev \
     libmp3lame-dev \
     libnuma-dev \
     libopus-dev \
-    libva-dev \
     libvorbis-dev \
     libvpx-dev \
     libx264-dev \
@@ -224,7 +222,6 @@ RUN \
     --enable-ffprobe \
     --enable-libaom \
     --enable-libdav1d \
-    --enable-libdrm \
     --enable-libmp3lame \
     --enable-libopus \
     --enable-libvorbis \
@@ -340,7 +337,6 @@ RUN \
   # ffmpeg components
     libaom3 \
     libdav1d6 \
-    libdrm2 \
     libmp3lame0 \
     libnuma1 \
     libopus0 \
@@ -378,7 +374,7 @@ RUN \
   ;
 
 RUN \
-# Smoketest components
+# Smoketest media processors
   vips -v; \
   ffmpeg -version; \
   ffprobe -version;
