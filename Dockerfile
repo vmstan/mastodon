@@ -131,6 +131,9 @@ RUN \
 --mount=type=cache,id=apt-lib-${TARGETPLATFORM},target=/var/lib/apt,sharing=locked \
 # Install build tools and bundler dependencies from APT
   apt-get install -y --no-install-recommends \
+    autoconf \
+    automake \
+    cmake \
     build-essential \
     git \
     libglib2.0-dev \
@@ -140,9 +143,11 @@ RUN \
     libidn-dev \
     libpq-dev \
     libssl-dev \
+    libtool \
     meson \
     pkg-config \
     shared-mime-info \
+    xz-utils \
   # libvips components
     libexpat1-dev \
     libjpeg62-turbo-dev \
@@ -158,6 +163,7 @@ RUN \
     liborc-dev \
   ;
 
+# Vips version to compile, change with [--build-arg VIPS_VERSION="8.15.2"]
 ARG VIPS_VERSION=8.15.2
 ARG VIPS_URL=https://github.com/libvips/libvips/releases/download
 
@@ -179,6 +185,65 @@ RUN \
   rm /usr/local/bin/yarn*; \
   corepack enable; \
   corepack prepare --activate;
+
+FROM build as ffmpeg
+
+RUN apt-get install -y --no-install-recommends \
+    libaom-dev \
+    libbz2-dev \
+    libdav1d-dev \
+    libdrm-dev \
+    liblzma-dev \
+    libmp3lame-dev \
+    libnuma-dev \
+    libopus-dev \
+    libva-dev \
+    libvorbis-dev \
+    libvpx-dev \
+    libx264-dev \
+    libx265-dev \
+  ;
+
+  ARG FFMPEG_VERSION=7.0
+  ARG FFMPEG_URL=https://ffmpeg.org/releases
+
+  WORKDIR /usr/local/src
+
+  RUN curl -sSL -o ffmpeg-${FFMPEG_VERSION}.tar.xz ${FFMPEG_URL}/ffmpeg-${FFMPEG_VERSION}.tar.xz
+
+  RUN tar xf ffmpeg-${FFMPEG_VERSION}.tar.xz \
+    && cd ffmpeg-${FFMPEG_VERSION} \
+    && mkdir -p /opt/ffmpeg \
+    &&  ./configure \
+          --prefix=/opt/ffmpeg \
+          --enable-rpath \
+          --enable-gpl \
+          --enable-version3 \
+          --enable-nonfree \
+          --disable-static \
+          --enable-shared \
+          # Program Options
+          --disable-programs \
+          --enable-ffmpeg \
+          --enable-ffprobe \
+          # Documentation Options
+          --disable-doc \
+          # Component Options
+          --disable-network \
+          # External Library Support
+          --enable-libaom \
+          --enable-libdav1d \
+          --enable-libdrm \
+          --enable-libmp3lame \
+          --enable-libopus \
+          --enable-libvorbis \
+          --enable-libvpx \
+          --enable-libx264 \
+          --enable-libx265 \
+          --enable-vaapi \
+      && make -j$(nproc) \
+      && make install \
+    ;
 
 # Create temporary bundler specific build layer from build layer
 FROM build as bundler
@@ -279,6 +344,22 @@ RUN \
     libheif1 \
     libimagequant0 \
     liborc-0.4-0 \
+  # ffmpeg components
+    libaom3 \
+    libdav1d6 \
+    libdrm2 \
+    libmp3lame0 \
+    libnuma1 \
+    libopus0 \
+    libva2 \
+    libva-drm2 \
+    libvorbis0a \
+    libvorbisenc2 \
+    libvorbisfile3 \
+    libvpx7 \
+    libx264-164 \
+    libx265-199 \
+    zlib1g \
   ;
 
 # Copy Mastodon sources into final layer
@@ -294,8 +375,8 @@ COPY --from=build /usr/local/bin/vips* /usr/local/bin
 COPY --from=build /usr/local/lib/libvips* /usr/local/lib
 COPY --from=build /usr/local/lib/pkgconfig/vips* /usr/local/lib/pkgconfig
 # Copy ffpmeg components to layer
-COPY --from=mwader/static-ffmpeg:7.0-1 /ffmpeg /usr/local/bin/
-COPY --from=mwader/static-ffmpeg:7.0-1 /ffprobe /usr/local/bin/
+COPY --from=ffmpeg /opt/ffmpeg/bin* /usr/local/bin
+COPY --from=ffmpeg /opt/ffmpeg/lib* /usr/local/lib
 # Symlink libvips components
 RUN ln -sf /usr/local/lib/libvips.so.42.17.2 /usr/local/lib/libvips.so.42 && \
     ln -sf /usr/local/lib/libvips-cpp.so.42.17.2 /usr/local/lib/libvips-cpp.so.42 && \
@@ -303,8 +384,8 @@ RUN ln -sf /usr/local/lib/libvips.so.42.17.2 /usr/local/lib/libvips.so.42 && \
     ln -sf /usr/local/lib/libvips.so.42.17.2 /usr/local/lib/libvips.so && \
     ldconfig
 
-ENV LD_LIBRARY_PATH /usr/local/lib
-ENV PKG_CONFIG_PATH /usr/local/lib/pkgconfig
+# ENV LD_LIBRARY_PATH /usr/local/lib
+# ENV PKG_CONFIG_PATH /usr/local/lib/pkgconfig
 
 RUN \
 # Precompile bootsnap code for faster Rails startup
