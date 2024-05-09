@@ -231,11 +231,9 @@ RUN \
     --enable-libvpx \
     --enable-libx264 \
     --enable-libx265 \
-    --enable-vaapi \
     --disable-doc \
     --disable-network \
     --disable-static \
-    --disable-programs \
   ; \
   make -j$(nproc); \
   make install;
@@ -346,8 +344,6 @@ RUN \
     libmp3lame0 \
     libnuma1 \
     libopus0 \
-    libva2 \
-    libva-drm2 \
     libvorbis0a \
     libvorbisenc2 \
     libvorbisfile3 \
@@ -380,6 +376,12 @@ RUN \
   ln -sf /usr/local/lib/libvips-cpp.so.42.17.2 /usr/local/lib/libvips-cpp.so; \
   ldconfig \
   ;
+
+RUN \
+# Smoketest components
+  vips -v; \
+  ffmpeg -version; \
+  ffprobe -version;
 
 RUN \
 # Precompile bootsnap code for faster Rails startup
