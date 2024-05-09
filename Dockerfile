@@ -183,12 +183,13 @@ WORKDIR /usr/local/src
 
 RUN curl -sSL -o vips-${VIPS_VERSION}.tar.xz ${VIPS_URL}/v${VIPS_VERSION}/vips-${VIPS_VERSION}.tar.xz
 
-RUN tar xf vips-${VIPS_VERSION}.tar.xz \
-  && cd vips-${VIPS_VERSION} \
-  && meson setup build --libdir=lib -Dintrospection=disabled -Dmodules=disabled -Dexamples=false \
-  && cd build \
-  && ninja \
-  && ninja install
+RUN \
+  tar xf vips-${VIPS_VERSION}.tar.xz; \
+  cd vips-${VIPS_VERSION}; \
+  meson setup build --libdir=lib -Dintrospection=disabled -Dmodules=disabled -Dexamples=false; \
+  cd build; \
+  ninja; \
+  ninja install;
 
 WORKDIR /opt/mastodon
 
@@ -208,10 +209,11 @@ WORKDIR /usr/local/src
 
 RUN curl -sSL -o ffmpeg-${FFMPEG_VERSION}.tar.xz ${FFMPEG_URL}/ffmpeg-${FFMPEG_VERSION}.tar.xz
 
-RUN tar xf ffmpeg-${FFMPEG_VERSION}.tar.xz \
-  && cd ffmpeg-${FFMPEG_VERSION} \
-  && mkdir -p /opt/ffmpeg \
-  &&  ./configure \
+RUN \
+  tar xf ffmpeg-${FFMPEG_VERSION}.tar.xz; \
+  cd ffmpeg-${FFMPEG_VERSION}; \
+  mkdir -p /opt/ffmpeg; \
+  ./configure \
     --prefix=/opt/ffmpeg \
     --enable-rpath \
     --enable-gpl \
@@ -234,9 +236,9 @@ RUN tar xf ffmpeg-${FFMPEG_VERSION}.tar.xz \
     --disable-network \
     --disable-static \
     --disable-programs \
-    && make -j$(nproc) \
-    && make install \
-  ;
+  ; \
+  make -j$(nproc); \
+  make install;
 
 # Create temporary bundler specific build layer from build layer
 FROM build as bundler
@@ -369,12 +371,15 @@ COPY --from=build /usr/local/lib/pkgconfig/vips* /usr/local/lib/pkgconfig
 # Copy ffpmeg components to layer
 COPY --from=ffmpeg /opt/ffmpeg/bin* /usr/local/bin
 COPY --from=ffmpeg /opt/ffmpeg/lib* /usr/local/lib
+
+RUN \
 # Symlink libvips components
-RUN ln -sf /usr/local/lib/libvips.so.42.17.2 /usr/local/lib/libvips.so.42 && \
-    ln -sf /usr/local/lib/libvips.so.42.17.2 /usr/local/lib/libvips.so && \
-    ln -sf /usr/local/lib/libvips-cpp.so.42.17.2 /usr/local/lib/libvips-cpp.so.42 && \
-    ln -sf /usr/local/lib/libvips-cpp.so.42.17.2 /usr/local/lib/libvips-cpp.so && \
-    ldconfig
+  ln -sf /usr/local/lib/libvips.so.42.17.2 /usr/local/lib/libvips.so.42; \
+  ln -sf /usr/local/lib/libvips.so.42.17.2 /usr/local/lib/libvips.so; \
+  ln -sf /usr/local/lib/libvips-cpp.so.42.17.2 /usr/local/lib/libvips-cpp.so.42; \
+  ln -sf /usr/local/lib/libvips-cpp.so.42.17.2 /usr/local/lib/libvips-cpp.so; \
+  ldconfig \
+  ;
 
 RUN \
 # Precompile bootsnap code for faster Rails startup
