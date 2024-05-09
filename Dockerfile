@@ -93,11 +93,8 @@ RUN \
   apt-get dist-upgrade -yq; \
 # Install jemalloc, curl and other necessary components
   apt-get install -y --no-install-recommends \
-    ca-certificates \
     curl \
-    # ffmpeg \
     file \
-    # imagemagick \
     libjemalloc2 \
     patchelf \
     procps \
@@ -133,11 +130,11 @@ RUN \
   apt-get install -y --no-install-recommends \
     autoconf \
     automake \
-    cmake \
     build-essential \
+    cmake \
     git \
-    libglib2.0-dev \
     libgdbm-dev \
+    libglib2.0-dev \
     libgmp-dev \
     libicu-dev \
     libidn-dev \
@@ -150,18 +147,18 @@ RUN \
     shared-mime-info \
     xz-utils \
   # libvips components
-    libexpat1-dev \
-    libjpeg62-turbo-dev \
-    libtiff-dev \
-    libspng-dev \
-    libexif-dev \
     libcgif-dev \
-    liblcms2-dev \
-    libwebp-dev \
-    libheif-dev \
+    libexif-dev \
+    libexpat1-dev \
     libgirepository1.0-dev \
+    libheif-dev \
     libimagequant-dev \
+    libjpeg62-turbo-dev \
+    liblcms2-dev \
     liborc-dev \
+    libspng-dev \
+    libtiff-dev \
+    libwebp-dev \
   # ffmpeg components
     libaom-dev \
     libbz2-dev \
@@ -215,32 +212,28 @@ RUN tar xf ffmpeg-${FFMPEG_VERSION}.tar.xz \
   && cd ffmpeg-${FFMPEG_VERSION} \
   && mkdir -p /opt/ffmpeg \
   &&  ./configure \
-        --prefix=/opt/ffmpeg \
-        --enable-rpath \
-        --enable-gpl \
-        --enable-version3 \
-        --enable-nonfree \
-        --disable-static \
-        --enable-shared \
-        # Program Options
-        --disable-programs \
-        --enable-ffmpeg \
-        --enable-ffprobe \
-        # Documentation Options
-        --disable-doc \
-        # Component Options
-        --disable-network \
-        # External Library Support
-        --enable-libaom \
-        --enable-libdav1d \
-        --enable-libdrm \
-        --enable-libmp3lame \
-        --enable-libopus \
-        --enable-libvorbis \
-        --enable-libvpx \
-        --enable-libx264 \
-        --enable-libx265 \
-        --enable-vaapi \
+    --prefix=/opt/ffmpeg \
+    --enable-rpath \
+    --enable-gpl \
+    --enable-version3 \
+    --enable-nonfree \
+    --enable-shared \
+    --enable-ffmpeg \
+    --enable-ffprobe \
+    --enable-libaom \
+    --enable-libdav1d \
+    --enable-libdrm \
+    --enable-libmp3lame \
+    --enable-libopus \
+    --enable-libvorbis \
+    --enable-libvpx \
+    --enable-libx264 \
+    --enable-libx265 \
+    --enable-vaapi \
+    --disable-doc \
+    --disable-network \
+    --disable-static \
+    --disable-programs \
     && make -j$(nproc) \
     && make install \
   ;
@@ -325,25 +318,25 @@ RUN \
   apt-get install -y --no-install-recommends \
     libexpat1 \
     libglib2.0-0 \
-    libssl3 \
-    libpq5 \
     libicu72 \
     libidn12 \
+    libpq5 \
     libreadline8 \
+    libssl3 \
     libyaml-0-2 \
   # libvips components
-    libjpeg62-turbo \
-    libtiff6 \
-    libspng0 \
-    libexif12 \
     libcgif0 \
-    liblcms2-2 \
-    libwebp7 \
-    libwebpmux3 \
-    libwebpdemux2 \
+    libexif12 \
     libheif1 \
     libimagequant0 \
+    libjpeg62-turbo \
+    liblcms2-2 \
     liborc-0.4-0 \
+    libspng0 \
+    libtiff6 \
+    libwebp7 \
+    libwebpdemux2 \
+    libwebpmux3 \
   # ffmpeg components
     libaom3 \
     libdav1d6 \
@@ -359,7 +352,6 @@ RUN \
     libvpx7 \
     libx264-164 \
     libx265-199 \
-    zlib1g \
   ;
 
 # Copy Mastodon sources into final layer
@@ -379,13 +371,10 @@ COPY --from=ffmpeg /opt/ffmpeg/bin* /usr/local/bin
 COPY --from=ffmpeg /opt/ffmpeg/lib* /usr/local/lib
 # Symlink libvips components
 RUN ln -sf /usr/local/lib/libvips.so.42.17.2 /usr/local/lib/libvips.so.42 && \
+    ln -sf /usr/local/lib/libvips.so.42.17.2 /usr/local/lib/libvips.so && \
     ln -sf /usr/local/lib/libvips-cpp.so.42.17.2 /usr/local/lib/libvips-cpp.so.42 && \
     ln -sf /usr/local/lib/libvips-cpp.so.42.17.2 /usr/local/lib/libvips-cpp.so && \
-    ln -sf /usr/local/lib/libvips.so.42.17.2 /usr/local/lib/libvips.so && \
     ldconfig
-
-# ENV LD_LIBRARY_PATH /usr/local/lib
-# ENV PKG_CONFIG_PATH /usr/local/lib/pkgconfig
 
 RUN \
 # Precompile bootsnap code for faster Rails startup
