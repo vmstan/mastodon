@@ -145,6 +145,7 @@ RUN \
     libssl-dev \
     libtool \
     meson \
+    nasm \
     pkg-config \
     shared-mime-info \
     xz-utils \
