@@ -178,7 +178,7 @@ RUN \
     libx265-dev \
   ;
 
-# Vips version to compile, change with [--build-arg VIPS_VERSION="8.15.2"]
+# libvips version to compile, change with [--build-arg VIPS_VERSION="8.15.2"]
 ARG VIPS_VERSION=8.15.2
 ARG VIPS_URL=https://github.com/libvips/libvips/releases/download
 
@@ -203,6 +203,7 @@ RUN \
 
 FROM build as ffmpeg
 
+# ffmpeg version to compile, change with [--build-arg FFMPEG_VERSION="7.0"]
 ARG FFMPEG_VERSION=7.0
 ARG FFMPEG_URL=https://ffmpeg.org/releases
 
