@@ -175,8 +175,8 @@ RUN \
 
 # libvips version to compile, change with [--build-arg VIPS_VERSION="8.15.2"]
 ARG VIPS_VERSION=8.15.2
-ARG VIPS_URL=https://github.com/libvips/libvips/releases/download
 ARG VIPS_SHA256=a2ab15946776ca7721d11cae3215f20f1f097b370ff580cd44fc0f19387aee84
+ARG VIPS_URL=https://github.com/libvips/libvips/releases/download
 
 WORKDIR /usr/local/src
 
@@ -204,8 +204,8 @@ FROM build as ffmpeg
 
 # ffmpeg version to compile, change with [--build-arg FFMPEG_VERSION="7.0"]
 ARG FFMPEG_VERSION=7.0
-ARG FFMPEG_URL=https://ffmpeg.org/releases
 ARG FFMPEG_SHA256=4426a94dd2c814945456600c8adfc402bee65ec14a70e8c531ec9a2cd651da7b
+ARG FFMPEG_URL=https://ffmpeg.org/releases
 
 WORKDIR /usr/local/src
 
