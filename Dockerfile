@@ -180,10 +180,11 @@ ARG VIPS_SHA256=a2ab15946776ca7721d11cae3215f20f1f097b370ff580cd44fc0f19387aee84
 
 WORKDIR /usr/local/src
 
-RUN curl -sSL -o vips-${VIPS_VERSION}.tar.xz ${VIPS_URL}/v${VIPS_VERSION}/vips-${VIPS_VERSION}.tar.xz
+RUN \
+  curl -sSL -o vips-${VIPS_VERSION}.tar.xz ${VIPS_URL}/v${VIPS_VERSION}/vips-${VIPS_VERSION}.tar.xz; \
+  echo "$VIPS_SHA256 vips-${VIPS_VERSION}.tar.xz" | sha256sum --check || exit 1;
 
 RUN \
-  echo "$VIPS_SHA256 vips-${VIPS_VERSION}.tar.xz" | sha256sum -c -; \
   tar xf vips-${VIPS_VERSION}.tar.xz; \
   cd vips-${VIPS_VERSION}; \
   meson setup build --libdir=lib -Dintrospection=disabled -Dmodules=disabled -Dexamples=false; \
@@ -208,10 +209,11 @@ ARG FFMPEG_SHA256=4426a94dd2c814945456600c8adfc402bee65ec14a70e8c531ec9a2cd651da
 
 WORKDIR /usr/local/src
 
-RUN curl -sSL -o ffmpeg-${FFMPEG_VERSION}.tar.xz ${FFMPEG_URL}/ffmpeg-${FFMPEG_VERSION}.tar.xz
+RUN \
+  curl -sSL -o ffmpeg-${FFMPEG_VERSION}.tar.xz ${FFMPEG_URL}/ffmpeg-${FFMPEG_VERSION}.tar.xz; \
+  echo "$FFMPEG_SHA256 ffmpeg-${FFMPEG_VERSION}.tar.xz" | sha256sum --check || exit 1;
 
 RUN \
-  echo "$FFMPEG_SHA256 ffmpeg-${FFMPEG_VERSION}.tar.xz" | sha256sum -c -; \
   tar xf ffmpeg-${FFMPEG_VERSION}.tar.xz; \
   cd ffmpeg-${FFMPEG_VERSION}; \
   mkdir -p /opt/ffmpeg; \
