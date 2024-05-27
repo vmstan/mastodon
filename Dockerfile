@@ -155,7 +155,7 @@ RUN \
     libimagequant-dev \
     libjpeg62-turbo-dev \
     liblcms2-dev \
-    liborc-dev \
+    libhwy-dev \
     libspng-dev \
     libtiff-dev \
     libwebp-dev \
@@ -334,7 +334,7 @@ RUN \
     libimagequant0 \
     libjpeg62-turbo \
     liblcms2-2 \
-    liborc-0.4-0 \
+    libhwy1 \
     libspng0 \
     libtiff6 \
     libwebp7 \
