@@ -187,7 +187,7 @@ RUN \
 RUN \
   tar xf vips-${VIPS_VERSION}.tar.xz; \
   cd vips-${VIPS_VERSION}; \
-  meson setup build --libdir=lib -Dintrospection=disabled -Dmodules=disabled -Dexamples=false; \
+  meson setup build --libdir=lib -Ddeprecated=false -Dintrospection=disabled -Dmodules=disabled -Dexamples=false; \
   cd build; \
   ninja; \
   ninja install;
