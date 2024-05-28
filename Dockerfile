@@ -203,8 +203,8 @@ RUN \
 FROM build as ffmpeg
 
 # ffmpeg version to compile, change with [--build-arg FFMPEG_VERSION="7.0"]
-ARG FFMPEG_VERSION=7.0
-ARG FFMPEG_SHA256=4426a94dd2c814945456600c8adfc402bee65ec14a70e8c531ec9a2cd651da7b
+ARG FFMPEG_VERSION=7.0.1
+ARG FFMPEG_SHA256=bce9eeb0f17ef8982390b1f37711a61b4290dc8c2a0c1a37b5857e85bfb0e4ff
 ARG FFMPEG_URL=https://ffmpeg.org/releases
 
 WORKDIR /usr/local/src
