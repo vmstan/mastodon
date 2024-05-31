@@ -16,7 +16,7 @@ ARG DEBIAN_VERSION="bookworm"
 # Node image to use for base image based on combined variables (ex: 20-bookworm-slim)
 FROM docker.io/node:${NODE_MAJOR_VERSION}-${DEBIAN_VERSION}-slim as node
 # Ruby image to use for base image based on combined variables (ex: 3.3.x-slim-bookworm)
-FROM docker.io/ruby:${RUBY_VERSION}-slim-${DEBIAN_VERSION} as ruby
+FROM docker.io/ruby:${RUBY_VERSION}-${DEBIAN_VERSION} as ruby
 
 # Resulting version string is vX.X.X-MASTODON_VERSION_PRERELEASE+MASTODON_VERSION_METADATA
 # Example: v4.2.0-nightly.2023.11.09+something
