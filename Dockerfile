@@ -167,7 +167,7 @@ RUN \
     libdav1d-dev \
     liblzma-dev \
     libmp3lame-dev \
-    libnuma-dev \
+    # libnuma-dev \
     libopus-dev \
     libvorbis-dev \
     libvpx-dev \
@@ -350,7 +350,7 @@ RUN \
     libaom3 \
     libdav1d6 \
     libmp3lame0 \
-    libnuma1 \
+    # libnuma1 \
     libopus0 \
     libvorbis0a \
     libvorbisenc2 \
