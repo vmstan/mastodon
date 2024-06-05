@@ -162,12 +162,10 @@ RUN \
     libtiff-dev \
     libwebp-dev \
   # ffmpeg components
-    # libaom-dev \
     libbz2-dev \
     libdav1d-dev \
     liblzma-dev \
     libmp3lame-dev \
-    # libnuma-dev \
     libopus-dev \
     libvorbis-dev \
     libvpx-dev \
@@ -232,7 +230,6 @@ RUN \
     --enable-shared \
     --enable-ffmpeg \
     --enable-ffprobe \
-    # --enable-libaom \
     --enable-libdav1d \
     --enable-libmp3lame \
     --enable-libopus \
@@ -347,10 +344,8 @@ RUN \
     libwebpdemux2 \
     libwebpmux3 \
   # ffmpeg components
-    # libaom3 \
     libdav1d6 \
     libmp3lame0 \
-    # libnuma1 \
     libopus0 \
     libvorbis0a \
     libvorbisenc2 \
