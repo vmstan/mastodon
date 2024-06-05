@@ -243,6 +243,7 @@ RUN \
     --enable-libtheora \
     --enable-decoder=alac \
     --enable-decoder=flac \
+    --enable-decoder=gif \
     --enable-decoder=h264 \
     --enable-decoder=hevc \
     --enable-decoder=mpeg2video \
