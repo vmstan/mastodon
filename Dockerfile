@@ -167,6 +167,7 @@ RUN \
     liblzma-dev \
     libmp3lame-dev \
     libopus-dev \
+    libtheora-dev \
     libvorbis-dev \
     libvpx-dev \
     libx264-dev \
@@ -233,6 +234,7 @@ RUN \
     --enable-libdav1d \
     --enable-libmp3lame \
     --enable-libopus \
+    --enable-libtheora \
     --enable-libvorbis \
     --enable-libvpx \
     --enable-libx264 \
@@ -347,6 +349,7 @@ RUN \
     libdav1d6 \
     libmp3lame0 \
     libopus0 \
+    libtheora0 \
     libvorbis0a \
     libvorbisenc2 \
     libvorbisfile3 \
