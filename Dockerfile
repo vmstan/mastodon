@@ -277,6 +277,14 @@ RUN \
     --enable-protocol=fd \
     --enable-protocol=tee \
     --enable-protocol=async \
+    --enable-protocol=cache \
+    --enable-protocol=data \
+    --enable-protocol=concat \
+    --enable-protocol=concatf \
+    --enable-protocol=crypto \
+    --enable-protocol=hls \
+    --enable-protocol=subfile \
+    --enable-filter=scale \
     --enable-filter=aresample \
     --disable-doc \
     --disable-network \
