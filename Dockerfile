@@ -19,7 +19,7 @@ FROM docker.io/node:${NODE_MAJOR_VERSION}-${DEBIAN_VERSION}-slim as node
 FROM docker.io/ruby:${RUBY_VERSION}-slim-${DEBIAN_VERSION} as ruby
 
 # Resulting version string is vX.X.X-MASTODON_VERSION_PRERELEASE+MASTODON_VERSION_METADATA
-# Example: v4.2.0-nightly.2023.11.09+pr-123456
+# Example: v4.3.0-nightly.2023.11.09+pr-123456
 # Overwrite existence of 'alpha.X' in version.rb [--build-arg MASTODON_VERSION_PRERELEASE="nightly.2023.11.09"]
 ARG MASTODON_VERSION_PRERELEASE=""
 # Append build metadata or fork information to version.rb [--build-arg MASTODON_VERSION_METADATA="pr-123456"]
@@ -43,8 +43,6 @@ ENV \
 # Apply Mastodon version information
   MASTODON_VERSION_PRERELEASE="${MASTODON_VERSION_PRERELEASE}" \
   MASTODON_VERSION_METADATA="${MASTODON_VERSION_METADATA}" \
-# Enable libvips
-  MASTODON_USE_LIBVIPS=true \
 # Apply Mastodon static files and YJIT options
   RAILS_SERVE_STATIC_FILES=${RAILS_SERVE_STATIC_FILES} \
   RUBY_YJIT_ENABLE=${RUBY_YJIT_ENABLE} \
@@ -62,7 +60,9 @@ ENV \
   DEBIAN_FRONTEND="noninteractive" \
   PATH="${PATH}:/opt/ruby/bin:/opt/mastodon/bin" \
 # Optimize jemalloc 5.x performance
-  MALLOC_CONF="narenas:2,background_thread:true,thp:never,dirty_decay_ms:1000,muzzy_decay_ms:0"
+  MALLOC_CONF="narenas:2,background_thread:true,thp:never,dirty_decay_ms:1000,muzzy_decay_ms:0" \
+# Enable libvips, should not be changed
+  MASTODON_USE_LIBVIPS=true
 
 # Set default shell used for running commands
 SHELL ["/bin/bash", "-o", "pipefail", "-o", "errexit", "-c"]
@@ -177,7 +177,9 @@ RUN \
 
 # libvips version to compile, change with [--build-arg VIPS_VERSION="8.15.2"]
 ARG VIPS_VERSION=8.15.2
+# libvips sha256 hash of downloaded archive, change with [--build-arg VIPS_SHA256="a1b2c3..."]
 ARG VIPS_SHA256=a2ab15946776ca7721d11cae3215f20f1f097b370ff580cd44fc0f19387aee84
+# libvips download URL, change with [--build-arg VIPS_URL="https://github.com/libvips/libvips/releases/download"]
 ARG VIPS_URL=https://github.com/libvips/libvips/releases/download
 
 WORKDIR /usr/local/src
@@ -204,9 +206,11 @@ RUN \
 
 FROM build as ffmpeg
 
-# ffmpeg version to compile, change with [--build-arg FFMPEG_VERSION="7.0"]
+# ffmpeg version to compile, change with [--build-arg FFMPEG_VERSION="7.0.x"]
 ARG FFMPEG_VERSION=7.0.1
+# ffmpeg sha256 hash of downloaded archive, change with [--build-arg FFMPEG_SHA256="a1b2c3..."]
 ARG FFMPEG_SHA256=bce9eeb0f17ef8982390b1f37711a61b4290dc8c2a0c1a37b5857e85bfb0e4ff
+# ffmpeg download URL, change with [--build-arg FFMPEG_URL="https://ffmpeg.org/releases"]
 ARG FFMPEG_URL=https://ffmpeg.org/releases
 
 WORKDIR /usr/local/src
