@@ -97,7 +97,7 @@ RUN \
   apt-get install -y --no-install-recommends \
     ca-certificates \
     curl \
-    ffmpeg \
+    # ffmpeg \
     file \
     libjemalloc2 \
     patchelf \
@@ -301,6 +301,9 @@ COPY --from=bundler /usr/local/bundle/ /usr/local/bundle/
 COPY --from=build /usr/local/bin/vips* /usr/local/bin
 COPY --from=build /usr/local/lib/libvips* /usr/local/lib
 COPY --from=build /usr/local/lib/pkgconfig/vips* /usr/local/lib/pkgconfig
+# Import FFmpeg
+COPY --from=mwader/static-ffmpeg:latest /ffmpeg /usr/local/bin/
+COPY --from=mwader/static-ffmpeg:latest /ffprobe /usr/local/bin/
 
 RUN \
 # Symlink libvips components
