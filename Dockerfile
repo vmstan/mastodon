@@ -218,24 +218,59 @@ RUN \
   mkdir -p /opt/ffmpeg; \
   ./configure \
     --prefix=/opt/ffmpeg \
-    --enable-rpath \
+    --disable-everything \
     --enable-gpl \
-    --enable-version3 \
     --enable-nonfree \
-    --enable-shared \
     --enable-ffmpeg \
     --enable-ffprobe \
-    --enable-libdav1d \
-    --enable-libmp3lame \
-    --enable-libopus \
-    --enable-libtheora \
-    --enable-libvorbis \
-    --enable-libvpx \
+    --enable-shared \
+    --enable-libwebp \
     --enable-libx264 \
     --enable-libx265 \
-    --disable-doc \
-    --disable-network \
-    --disable-static \
+    --enable-libvpx \
+    --enable-libvorbis \
+    --enable-libopus \
+    --enable-libdav1d \
+    --enable-libmp3lame \
+    --enable-libtheora \
+    --enable-decoder=alac \
+    --enable-decoder=flac \
+    --enable-decoder=gif \
+    --enable-decoder=h264 \
+    --enable-decoder=hevc \
+    --enable-decoder=mpeg2video \
+    --enable-decoder=mp3 \
+    --enable-decoder=opus \
+    --enable-decoder=theora \
+    --enable-decoder=vorbis \
+    --enable-decoder=vp8 \
+    --enable-decoder=vp9 \
+    --enable-decoder=wavpack \
+    --enable-decoder=webp \
+    --enable-demuxer=3gp \
+    --enable-demuxer=aac \
+    --enable-demuxer=flac \
+    --enable-demuxer=gif \
+    --enable-demuxer=h264 \
+    --enable-demuxer=hevc \
+    --enable-demuxer=matroska \
+    --enable-demuxer=mov \
+    --enable-demuxer=mp3 \
+    --enable-demuxer=ogg \
+    --enable-demuxer=wav \
+    --enable-demuxer=webm \
+    --enable-demuxer=webp \
+    --enable-muxer=mp4 \
+    --enable-muxer=mp3 \
+    --enable-encoder=libx264 \
+    --enable-encoder=libmp3lame \
+    --enable-encoder=aac \
+    --enable-protocol=file \
+    --enable-protocol=pipe \
+    --enable-protocol=fd \
+    --enable-protocol=tee \
+    --enable-protocol=async \
+    --enable-filter=aresample \
   ; \
   make -j$(nproc); \
   make install;
