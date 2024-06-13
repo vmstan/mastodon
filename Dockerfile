@@ -13,7 +13,7 @@ ARG BUILDPLATFORM=${BUILDPLATFORM}
 # Ruby image to use for base image, change with [--build-arg RUBY_VERSION="3.3.x"]
 # renovate: datasource=docker depName=docker.io/ruby
 ARG RUBY_VERSION="3.3.3"
-# # Node version to use in base image, change with [--build-arg NODE_MAJOR_VERSION="20"]
+# Node version to use in base image, change with [--build-arg NODE_MAJOR_VERSION="20"]
 # renovate: datasource=node-version depName=node
 ARG NODE_MAJOR_VERSION="20"
 # Debian image to use for base image, change with [--build-arg DEBIAN_VERSION="bookworm"]
