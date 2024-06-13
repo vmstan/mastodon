@@ -13,11 +13,16 @@ ARG BUILDPLATFORM=${BUILDPLATFORM}
 # Ruby image to use for base image, change with [--build-arg RUBY_VERSION="3.3.x"]
 # renovate: datasource=docker depName=docker.io/ruby
 ARG RUBY_VERSION="3.3.3"
-# # Node version to use in base image, change with [--build-arg NODE_MAJOR_VERSION="20"]
+# Node version to use in base image, change with [--build-arg NODE_MAJOR_VERSION="20"]
 # renovate: datasource=node-version depName=node
 ARG NODE_MAJOR_VERSION="20"
 # Debian image to use for base image, change with [--build-arg DEBIAN_VERSION="bookworm"]
 ARG DEBIAN_VERSION="bookworm"
+# ffmpeg version to include, change with [--build-arg FFMPEG_VERSION="7.0.1"]
+# renovate: datasource=docker depName=docker.io/mwader/static-ffmpeg
+ARG FFMPEG_VERSION="7.0.1"
+# ffmpeg image to use for base image based on combined variables (ex: 7.0.1)
+FROM docker.io/mwader/static-ffmpeg:${FFMPEG_VERSION} as ffmpeg
 # Node image to use for base image based on combined variables (ex: 20-bookworm-slim)
 FROM docker.io/node:${NODE_MAJOR_VERSION}-${DEBIAN_VERSION}-slim as node
 # Ruby image to use for base image based on combined variables (ex: 3.3.x-slim-bookworm)
@@ -102,7 +107,6 @@ RUN \
   apt-get install -y --no-install-recommends \
     ca-certificates \
     curl \
-    ffmpeg \
     file \
     libjemalloc2 \
     patchelf \
@@ -302,11 +306,16 @@ COPY --from=bundler /usr/local/bundle/ /usr/local/bundle/
 # Copy libvips components to layer
 COPY --from=libvips /usr/local/libvips/bin /usr/local/bin
 COPY --from=libvips /usr/local/libvips/lib /usr/local/lib
+# Copy ffmpeg and ffprobe binaries from mwader/static-ffmpeg
+COPY --from=ffmpeg /ffmpeg /usr/local/bin/ffmpeg
+COPY --from=ffmpeg /ffprobe /usr/local/bin/ffprobe
 
 RUN \
   ldconfig; \
 # Smoketest media processors
-  vips -v;
+  vips -v; \
+  ffmpeg -version; \
+  ffprobe -version;
 
 RUN \
   # Precompile bootsnap code for faster Rails startup
