@@ -102,7 +102,6 @@ RUN \
   apt-get install -y --no-install-recommends \
     ca-certificates \
     curl \
-    ffmpeg \
     file \
     libjemalloc2 \
     patchelf \
@@ -303,10 +302,19 @@ COPY --from=bundler /usr/local/bundle/ /usr/local/bundle/
 COPY --from=libvips /usr/local/libvips/bin /usr/local/bin
 COPY --from=libvips /usr/local/libvips/lib /usr/local/lib
 
+# ffmpeg version to include, change with [--build-arg FFMPEG_VERSION="7.0.1"]
+# renovate: datasource=docker depName=docker.io/mwader/static-ffmpeg
+ARG FFMPEG_VERSION=7.0.1
+# Copy ffmpeg and ffprobe binaries from mwader/static-ffmpeg
+COPY --from=mwader/static-ffmpeg:${FFMPEG_VERSION} /ffmpeg /usr/local/bin/ffmpeg
+COPY --from=mwader/static-ffmpeg:${FFMPEG_VERSION} /ffprobe /usr/local/bin/ffprobe
+
 RUN \
   ldconfig; \
 # Smoketest media processors
-  vips -v;
+  vips -v; \
+  ffmpeg -version; \
+  ffprobe -version;
 
 RUN \
   # Precompile bootsnap code for faster Rails startup
