@@ -306,7 +306,6 @@ COPY --from=bundler /usr/local/bundle/ /usr/local/bundle/
 # Copy libvips components to layer
 COPY --from=libvips /usr/local/libvips/bin /usr/local/bin
 COPY --from=libvips /usr/local/libvips/lib /usr/local/lib
-
 # Copy ffmpeg and ffprobe binaries from mwader/static-ffmpeg
 COPY --from=ffmpeg /ffmpeg /usr/local/bin/ffmpeg
 COPY --from=ffmpeg /ffprobe /usr/local/bin/ffprobe
