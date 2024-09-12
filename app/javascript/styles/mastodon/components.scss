@@ -6847,9 +6847,14 @@ a.status-card {
     backdrop-filter: blur(10px) saturate(180%) contrast(75%) brightness(70%);
     padding: 3px 12px;
     border-radius: 4px;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 700;
     line-height: 20px;
+    opacity: 0.5;
+
+    &:hover {
+      opacity: 1;
+    }
   }
 }
 
@@ -6876,6 +6881,7 @@ a.status-card {
   z-index: 1;
   pointer-events: none;
   line-height: 20px;
+  opacity: 0.5;
 }
 
 .attachment-list {
