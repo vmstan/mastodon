@@ -6833,15 +6833,15 @@ a.status-card {
 
 .media-gallery__actions {
   position: absolute;
-  bottom: 8px;
+  bottom: 6px;
   inset-inline-end: 8px;
   display: flex;
   gap: 2px;
-  z-index: 2;
+  z-index: 1;
 
   &__pill {
     display: block;
-    color: $white;
+    color: rgba($white, 0.65);
     border: 0;
     background: rgba($black, 0.65);
     backdrop-filter: blur(10px) saturate(180%) contrast(75%) brightness(70%);
@@ -6850,10 +6850,12 @@ a.status-card {
     font-size: 12px;
     font-weight: 700;
     line-height: 20px;
-    opacity: 0.75;
+    opacity: 0.65;
 
     &:hover {
       opacity: 1;
+      color: $white;
+      background: $ui-button-focus-background-color;
     }
   }
 }
@@ -6871,7 +6873,7 @@ a.status-card {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: $white;
+  color: rgba($white, 0.65);
   background: rgba($black, 0.65);
   backdrop-filter: blur(10px) saturate(180%) contrast(75%) brightness(70%);
   padding: 3px 8px;
@@ -6881,7 +6883,7 @@ a.status-card {
   z-index: 1;
   pointer-events: none;
   line-height: 20px;
-  opacity: 0.75;
+  opacity: 0.65;
 }
 
 .attachment-list {
