@@ -6861,6 +6861,10 @@ a.status-card {
       // background: $ui-button-focus-background-color;
     }
   }
+
+  @media screen and (width <= $mobile-breakpoint) {
+    inset-inline-end: -6px;
+  }
 }
 
 .media-gallery__item__badges {
