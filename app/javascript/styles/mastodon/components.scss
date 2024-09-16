@@ -6833,10 +6833,10 @@ a.status-card {
 
 .media-gallery__actions {
   position: absolute;
-  bottom: 2px;
-  inset-inline-end: 2px;
+  bottom: -4px;
+  inset-inline-end: 0;
   display: flex;
-  gap: 2px;
+  gap: 0;
   z-index: 1;
 
   &__pill {
@@ -6863,7 +6863,7 @@ a.status-card {
   }
 
   @media screen and (width <= $mobile-breakpoint) {
-    inset-inline-end: -6px;
+    inset-inline-end: -4px;
   }
 }
 
