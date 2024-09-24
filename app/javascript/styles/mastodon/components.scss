@@ -6924,11 +6924,11 @@ a.status-card {
   justify-content: center;
   color: $white;
   background: rgba($black, 0.65);
-  backdrop-filter: blur(10px) saturate(180%) contrast(75%) brightness(70%);
+  backdrop-filter: blur(0);
   padding: 3px 8px;
   border-radius: 4px;
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 400;
   z-index: 1;
   pointer-events: none;
   line-height: 20px;
