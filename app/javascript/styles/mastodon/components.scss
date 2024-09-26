@@ -6978,9 +6978,9 @@ a.status-card {
   display: block;
   text-align: center;
   color: $white;
+  border: 0;
   background: rgba($black, 0.75);
   backdrop-filter: blur(0);
-  border: 0;
   padding: 3px 8px;
   border-radius: 4px;
   font-size: 12px;
