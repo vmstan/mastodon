@@ -186,73 +186,73 @@ RUN \
   corepack enable; \
   corepack prepare --activate;
 
-# Create temporary libvips specific build layer from build layer
-FROM build AS libvips
+# # Create temporary libvips specific build layer from build layer
+# FROM build AS libvips
 
-# libvips version to compile, change with [--build-arg VIPS_VERSION="8.15.2"]
-# renovate: datasource=github-releases depName=libvips packageName=libvips/libvips
-ARG VIPS_VERSION=8.16.0
-# libvips download URL, change with [--build-arg VIPS_URL="https://github.com/libvips/libvips/releases/download"]
-ARG VIPS_URL=https://github.com/libvips/libvips/releases/download
+# # libvips version to compile, change with [--build-arg VIPS_VERSION="8.15.2"]
+# # renovate: datasource=github-releases depName=libvips packageName=libvips/libvips
+# ARG VIPS_VERSION=8.16.0
+# # libvips download URL, change with [--build-arg VIPS_URL="https://github.com/libvips/libvips/releases/download"]
+# ARG VIPS_URL=https://github.com/libvips/libvips/releases/download
 
-WORKDIR /usr/local/libvips/src
-# Download and extract libvips source code
-ADD ${VIPS_URL}/v${VIPS_VERSION}/vips-${VIPS_VERSION}.tar.xz /usr/local/libvips/src/
-RUN tar xf vips-${VIPS_VERSION}.tar.xz;
+# WORKDIR /usr/local/libvips/src
+# # Download and extract libvips source code
+# ADD ${VIPS_URL}/v${VIPS_VERSION}/vips-${VIPS_VERSION}.tar.xz /usr/local/libvips/src/
+# RUN tar xf vips-${VIPS_VERSION}.tar.xz;
 
-WORKDIR /usr/local/libvips/src/vips-${VIPS_VERSION}
+# WORKDIR /usr/local/libvips/src/vips-${VIPS_VERSION}
 
-# Configure and compile libvips
-RUN \
-  meson setup build --prefix /usr/local/libvips --libdir=lib -Ddeprecated=false -Dintrospection=disabled -Dmodules=disabled -Dexamples=false; \
-  cd build; \
-  ninja; \
-  ninja install;
+# # Configure and compile libvips
+# RUN \
+#   meson setup build --prefix /usr/local/libvips --libdir=lib -Ddeprecated=false -Dintrospection=disabled -Dmodules=disabled -Dexamples=false; \
+#   cd build; \
+#   ninja; \
+#   ninja install;
 
-# Create temporary ffmpeg specific build layer from build layer
-FROM build AS ffmpeg
+# # Create temporary ffmpeg specific build layer from build layer
+# FROM build AS ffmpeg
 
-# ffmpeg version to compile, change with [--build-arg FFMPEG_VERSION="7.0.x"]
-# renovate: datasource=repology depName=ffmpeg packageName=openpkg_current/ffmpeg
-ARG FFMPEG_VERSION=7.1
-# ffmpeg download URL, change with [--build-arg FFMPEG_URL="https://ffmpeg.org/releases"]
-ARG FFMPEG_URL=https://ffmpeg.org/releases
+# # ffmpeg version to compile, change with [--build-arg FFMPEG_VERSION="7.0.x"]
+# # renovate: datasource=repology depName=ffmpeg packageName=openpkg_current/ffmpeg
+# ARG FFMPEG_VERSION=7.1
+# # ffmpeg download URL, change with [--build-arg FFMPEG_URL="https://ffmpeg.org/releases"]
+# ARG FFMPEG_URL=https://ffmpeg.org/releases
 
-WORKDIR /usr/local/ffmpeg/src
-# Download and extract ffmpeg source code
-ADD ${FFMPEG_URL}/ffmpeg-${FFMPEG_VERSION}.tar.xz /usr/local/ffmpeg/src/
-RUN tar xf ffmpeg-${FFMPEG_VERSION}.tar.xz;
+# WORKDIR /usr/local/ffmpeg/src
+# # Download and extract ffmpeg source code
+# ADD ${FFMPEG_URL}/ffmpeg-${FFMPEG_VERSION}.tar.xz /usr/local/ffmpeg/src/
+# RUN tar xf ffmpeg-${FFMPEG_VERSION}.tar.xz;
 
-WORKDIR /usr/local/ffmpeg/src/ffmpeg-${FFMPEG_VERSION}
+# WORKDIR /usr/local/ffmpeg/src/ffmpeg-${FFMPEG_VERSION}
 
-# Configure and compile ffmpeg
-RUN \
-  ./configure \
-    --prefix=/usr/local/ffmpeg \
-    --toolchain=hardened \
-    --disable-debug \
-    --disable-devices \
-    --disable-doc \
-    --disable-ffplay \
-    --disable-network \
-    --disable-static \
-    --enable-ffmpeg \
-    --enable-ffprobe \
-    --enable-gpl \
-    --enable-libdav1d \
-    --enable-libmp3lame \
-    --enable-libopus \
-    --enable-libsnappy \
-    --enable-libvorbis \
-    --enable-libvpx \
-    --enable-libwebp \
-    --enable-libx264 \
-    --enable-libx265 \
-    --enable-shared \
-    --enable-version3 \
-  ; \
-  make -j$(nproc); \
-  make install;
+# # Configure and compile ffmpeg
+# RUN \
+#   ./configure \
+#     --prefix=/usr/local/ffmpeg \
+#     --toolchain=hardened \
+#     --disable-debug \
+#     --disable-devices \
+#     --disable-doc \
+#     --disable-ffplay \
+#     --disable-network \
+#     --disable-static \
+#     --enable-ffmpeg \
+#     --enable-ffprobe \
+#     --enable-gpl \
+#     --enable-libdav1d \
+#     --enable-libmp3lame \
+#     --enable-libopus \
+#     --enable-libsnappy \
+#     --enable-libvorbis \
+#     --enable-libvpx \
+#     --enable-libwebp \
+#     --enable-libx264 \
+#     --enable-libx265 \
+#     --enable-shared \
+#     --enable-version3 \
+#   ; \
+#   make -j$(nproc); \
+#   make install;
 
 # Create temporary bundler specific build layer from build layer
 FROM build AS bundler
@@ -378,11 +378,11 @@ COPY --from=precompiler /opt/mastodon/public/assets /opt/mastodon/public/assets
 # Copy bundler components to layer
 COPY --from=bundler /usr/local/bundle/ /usr/local/bundle/
 # Copy libvips components to layer
-COPY --from=libvips /usr/local/libvips/bin /usr/local/bin
-COPY --from=libvips /usr/local/libvips/lib /usr/local/lib
+COPY --from=ghcr.io/vmstio/media-processors:latest /usr/local/libvips/bin /usr/local/bin
+COPY --from=ghcr.io/vmstio/media-processors:latest /usr/local/libvips/lib /usr/local/lib
 # Copy ffpmeg components to layer
-COPY --from=ffmpeg /usr/local/ffmpeg/bin /usr/local/bin
-COPY --from=ffmpeg /usr/local/ffmpeg/lib /usr/local/lib
+COPY --from=ghcr.io/vmstio/media-processors:latest /usr/local/ffmpeg/bin /usr/local/bin
+COPY --from=ghcr.io/vmstio/media-processors:latest /usr/local/ffmpeg/lib /usr/local/lib
 
 RUN \
   ldconfig; \
