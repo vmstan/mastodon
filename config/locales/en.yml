@@ -1841,6 +1841,13 @@ en:
   tags:
     does_not_match_previous_name: does not match the previous name
   themes:
+    mastodon-bird-ui-contrast: Bird (High contrast)
+    mastodon-bird-ui-dark: Bird (Dark)
+    mastodon-bird-ui-light: Bird (Light)
+    tangerine-ui: Tangerine (Auto)
+    tangerine-cherry-ui: Tangerine Cherry (Auto)
+    tangerine-lagoon-ui: Tangerine Lagoon (Auto)
+    tangerine-purple-ui: Tangerine Purple (Auto)
     contrast: Mastodon (High contrast)
     default: Mastodon (Dark)
     mastodon-light: Mastodon (Light)
