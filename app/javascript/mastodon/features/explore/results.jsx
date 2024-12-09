@@ -9,6 +9,9 @@ import { List as ImmutableList } from 'immutable';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { connect } from 'react-redux';
 
+import FindInPageIcon from '@/material-icons/400-24px/find_in_page.svg?react';
+import PeopleIcon from '@/material-icons/400-24px/group.svg?react';
+import TagIcon from '@/material-icons/400-24px/tag.svg?react';
 import { submitSearch, expandSearch } from 'mastodon/actions/search';
 import { ImmutableHashtag as Hashtag } from 'mastodon/components/hashtag';
 import { Icon } from 'mastodon/components/icon';
@@ -80,7 +83,7 @@ class Results extends PureComponent {
     }
 
     return null;
-  };
+  }
 
   handleSelectAll = () => {
     const { submittedType, dispatch } = this.props;
@@ -116,7 +119,7 @@ class Results extends PureComponent {
     }
 
     this.setState({ type: 'hashtags' });
-  }
+  };
 
   handleSelectStatuses = () => {
     const { submittedType, dispatch } = this.props;
@@ -128,7 +131,7 @@ class Results extends PureComponent {
     }
 
     this.setState({ type: 'statuses' });
-  }
+  };
 
   handleLoadMoreAccounts = () => this._loadMore('accounts');
   handleLoadMoreStatuses = () => this._loadMore('statuses');
@@ -156,45 +159,43 @@ class Results extends PureComponent {
 
     let filteredResults;
 
-    if (!isLoading) {
-      const accounts = results.get('accounts', ImmutableList());
-      const hashtags = results.get('hashtags', ImmutableList());
-      const statuses = results.get('statuses', ImmutableList());
+    const accounts = results.get('accounts', ImmutableList());
+    const hashtags = results.get('hashtags', ImmutableList());
+    const statuses = results.get('statuses', ImmutableList());
 
-      switch(type) {
-      case 'all':
-        filteredResults = (accounts.size + hashtags.size + statuses.size) > 0 ? (
-          <>
-            {accounts.size > 0 && (
-              <SearchSection key='accounts' title={<><Icon id='users' fixedWidth /><FormattedMessage id='search_results.accounts' defaultMessage='Profiles' /></>} onClickMore={this.handleLoadMoreAccounts}>
-                {accounts.take(INITIAL_DISPLAY).map(id => <Account key={id} id={id} />)}
-              </SearchSection>
-            )}
+    switch(type) {
+    case 'all':
+      filteredResults = (accounts.size + hashtags.size + statuses.size) > 0 ? (
+        <>
+          {accounts.size > 0 && (
+            <SearchSection key='accounts' title={<><Icon id='users' icon={PeopleIcon} /><FormattedMessage id='search_results.accounts' defaultMessage='Profiles' /></>} onClickMore={this.handleLoadMoreAccounts}>
+              {accounts.take(INITIAL_DISPLAY).map(id => <Account key={id} id={id} />)}
+            </SearchSection>
+          )}
 
-            {hashtags.size > 0 && (
-              <SearchSection key='hashtags' title={<><Icon id='hashtag' fixedWidth /><FormattedMessage id='search_results.hashtags' defaultMessage='Hashtags' /></>} onClickMore={this.handleLoadMoreHashtags}>
-                {hashtags.take(INITIAL_DISPLAY).map(hashtag => <Hashtag key={hashtag.get('name')} hashtag={hashtag} />)}
-              </SearchSection>
-            )}
+          {hashtags.size > 0 && (
+            <SearchSection key='hashtags' title={<><Icon id='hashtag' icon={TagIcon} /><FormattedMessage id='search_results.hashtags' defaultMessage='Hashtags' /></>} onClickMore={this.handleLoadMoreHashtags}>
+              {hashtags.take(INITIAL_DISPLAY).map(hashtag => <Hashtag key={hashtag.get('name')} hashtag={hashtag} />)}
+            </SearchSection>
+          )}
 
-            {statuses.size > 0 && (
-              <SearchSection key='statuses' title={<><Icon id='quote-right' fixedWidth /><FormattedMessage id='search_results.statuses' defaultMessage='Posts' /></>} onClickMore={this.handleLoadMoreStatuses}>
-                {statuses.take(INITIAL_DISPLAY).map(id => <Status key={id} id={id} />)}
-              </SearchSection>
-            )}
-          </>
-        ) : [];
-        break;
-      case 'accounts':
-        filteredResults = renderAccounts(accounts);
-        break;
-      case 'hashtags':
-        filteredResults = renderHashtags(hashtags);
-        break;
-      case 'statuses':
-        filteredResults = renderStatuses(statuses);
-        break;
-      }
+          {statuses.size > 0 && (
+            <SearchSection key='statuses' title={<><Icon id='quote-right' icon={FindInPageIcon} /><FormattedMessage id='search_results.statuses' defaultMessage='Posts' /></>} onClickMore={this.handleLoadMoreStatuses}>
+              {statuses.take(INITIAL_DISPLAY).map(id => <Status key={id} id={id} />)}
+            </SearchSection>
+          )}
+        </>
+      ) : [];
+      break;
+    case 'accounts':
+      filteredResults = renderAccounts(accounts);
+      break;
+    case 'hashtags':
+      filteredResults = renderHashtags(hashtags);
+      break;
+    case 'statuses':
+      filteredResults = renderStatuses(statuses);
+      break;
     }
 
     return (
@@ -206,7 +207,7 @@ class Results extends PureComponent {
           <button onClick={this.handleSelectStatuses} className={type === 'statuses' ? 'active' : undefined}><FormattedMessage id='search_results.statuses' defaultMessage='Posts' /></button>
         </div>
 
-        <div className='explore__search-results'>
+        <div className='explore__search-results' data-nosnippet>
           <ScrollableList
             scrollKey='search-results'
             isLoading={isLoading}
