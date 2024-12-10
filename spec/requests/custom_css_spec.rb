@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe 'Custom CSS' do
+RSpec.describe 'Custom CSS' do
   include RoutingHelper
 
   describe 'GET /custom.css' do
@@ -10,8 +10,14 @@ describe 'Custom CSS' do
       it 'returns empty stylesheet' do
         get '/custom.css'
 
-        expect(response.content_type).to include('text/css')
-        expect(response.body.presence).to be_nil
+        expect(response)
+          .to have_http_status(200)
+          .and have_cacheable_headers
+          .and have_attributes(
+            content_type: match('text/css')
+          )
+        expect(response.body.presence)
+          .to be_nil
       end
     end
 
@@ -23,8 +29,14 @@ describe 'Custom CSS' do
       it 'returns stylesheet from settings' do
         get '/custom.css'
 
-        expect(response.content_type).to include('text/css')
-        expect(response.body.strip).to eq(expected_css)
+        expect(response)
+          .to have_http_status(200)
+          .and have_cacheable_headers
+          .and have_attributes(
+            content_type: match('text/css')
+          )
+        expect(response.body.strip)
+          .to eq(expected_css)
       end
 
       def expected_css
@@ -44,8 +56,14 @@ describe 'Custom CSS' do
       it 'returns stylesheet from settings' do
         get '/custom.css'
 
-        expect(response.content_type).to include('text/css')
-        expect(response.body.strip).to eq(expected_css)
+        expect(response)
+          .to have_http_status(200)
+          .and have_cacheable_headers
+          .and have_attributes(
+            content_type: match('text/css')
+          )
+        expect(response.body.strip)
+          .to eq(expected_css)
       end
 
       def expected_css

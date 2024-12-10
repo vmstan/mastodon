@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe UserMailer do
+RSpec.describe UserMailer do
   let(:receiver) { Fabricate(:user) }
 
   describe '#confirmation_instructions' do
@@ -270,6 +270,18 @@ describe UserMailer do
         .to be_present
         .and(have_subject(I18n.t('user_mailer.backup_ready.subject')))
         .and(have_body_text(I18n.t('user_mailer.backup_ready.explanation')))
+    end
+  end
+
+  describe '#terms_of_service_changed' do
+    let(:terms) { Fabricate :terms_of_service }
+    let(:mail) { described_class.terms_of_service_changed(receiver, terms) }
+
+    it 'renders terms_of_service_changed mail' do
+      expect(mail)
+        .to be_present
+        .and(have_subject(I18n.t('user_mailer.terms_of_service_changed.subject')))
+        .and(have_body_text(I18n.t('user_mailer.terms_of_service_changed.changelog')))
     end
   end
 end

@@ -33,6 +33,14 @@ RSpec.describe LinkDetailsExtractor do
         expect(subject.canonical_url).to eq original_url
       end
     end
+
+    context 'when canonical URL is set to "undefined"' do
+      let(:url) { 'undefined' }
+
+      it 'ignores the canonical URLs' do
+        expect(subject.canonical_url).to eq original_url
+      end
+    end
   end
 
   context 'when only basic metadata is present' do
@@ -41,7 +49,8 @@ RSpec.describe LinkDetailsExtractor do
       <html lang="en">
       <head>
         <title>Man bites dog</title>
-        <meta name="description" content="A dog&#39;s tale">
+        <meta name="descripTION" content="A dog&#39;s tale">
+        <link rel="pretty IcoN" href="/favicon.ico">
       </head>
       </html>
     HTML
@@ -51,7 +60,8 @@ RSpec.describe LinkDetailsExtractor do
         .to have_attributes(
           title: eq('Man bites dog'),
           description: eq("A dog's tale"),
-          language: eq('en')
+          language: eq('en'),
+          icon: eq('https://example.com/favicon.ico')
         )
     end
   end
@@ -118,6 +128,24 @@ RSpec.describe LinkDetailsExtractor do
         <body>
           <script type="application/ld+json">
             invalid LD+JSON
+          </script>
+          <script type="application/ld+json">
+            #{ld_json}
+          </script>
+        </body>
+        </html>
+      HTML
+
+      include_examples 'structured data'
+    end
+
+    context 'with the first tag is null' do
+      let(:html) { <<~HTML }
+        <!doctype html>
+        <html>
+        <body>
+          <script type="application/ld+json">
+            null
           </script>
           <script type="application/ld+json">
             #{ld_json}
@@ -230,7 +258,7 @@ RSpec.describe LinkDetailsExtractor do
       <head>
         <meta property="og:url" content="https://example.com/dog.html">
         <meta property="og:title" content="Man bites dog">
-        <meta property="og:description" content="A dog's tale">
+        <meta property="OG:description" content="A dog's tale">
         <meta property="article:published_time" content="2022-01-31T19:53:00+00:00">
         <meta property="og:author" content="Charlie Brown">
         <meta property="og:locale" content="en">
