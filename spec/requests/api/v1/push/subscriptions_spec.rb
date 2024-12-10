@@ -45,6 +45,8 @@ RSpec.describe 'API V1 Push Subscriptions' do
       subject
 
       expect(response).to have_http_status(422)
+      expect(response.content_type)
+        .to start_with('application/json')
       expect(endpoint_push_subscriptions.count).to eq(0)
       expect(endpoint_push_subscription).to be_nil
     end
@@ -130,6 +132,23 @@ RSpec.describe 'API V1 Push Subscriptions' do
           alerts: alerts_payload[:data][:alerts],
           policy: alerts_payload[:data][:policy]
         )
+    end
+  end
+
+  describe 'GET /api/v1/push/subscription' do
+    subject { get '/api/v1/push/subscription', headers: headers }
+
+    before { create_subscription_with_token }
+
+    it 'shows subscription details' do
+      subject
+
+      expect(response)
+        .to have_http_status(200)
+      expect(response.content_type)
+        .to start_with('application/json')
+      expect(response.parsed_body)
+        .to include(endpoint: endpoint)
     end
   end
 

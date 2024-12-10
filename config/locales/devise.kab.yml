@@ -11,9 +11,9 @@ kab:
       invalid: Tella tuccḍa deg %{authentication_keys} neγ deg wawal uffir.
       last_attempt: Γur-k yiwen n uɛraḍ-nniḍen kan send ad yettucekkel umiḍan-ik.
       locked: Amiḍan-ik yettwargel.
-      not_found_in_database: Tella tuccḍa deg %{authentication_keys} neγ deg wawal uffir.
+      not_found_in_database: Tella tuccḍa deg %{authentication_keys} neɣ deg wawal uffir.
       omniauth_user_creation_failure: Tuccḍa lawan n tmerna n umiḍan i timagit-a.
-      pending: Amiḍan-inek mazal-it deg ɛiwed n tmuγli.
+      pending: Amiḍan-inek·inem mazal-it deg ɛiwed n tmuɣli.
       timeout: Tiɣimit n tuqqna tezri. Ma ulac aɣilif ɛiwed tuqqna akken ad tkemmleḍ.
       unauthenticated: Ilaq ad teqqneḍ neɣ ad tjerrḍeḍ send ad tkemmelḍ.
       unconfirmed: Ilaq ad wekdeḍ tansa-inek·inem imayl send ad tkemmelḍ.
@@ -94,11 +94,6 @@ kab:
       updated_not_active: Awal-ik uffir yettwabeddel mebla ugur.
     registrations:
       destroyed: Ar timlilit! Amiḍan-ik yettwakkes mebla ugur. Nessaram ad k-nwali tikelt-nniḍen.
-      signed_up: Anṣuf! Aqla-k tkecmeḍ.
-      signed_up_but_inactive: Tjerdeḍ akken iwata. maca ur tezmireḍ ara ad teqneḍ akka tura acku amiḍan-ik·im mazal ur yermid ara.
-      signed_up_but_locked: Tjerdeḍ akken iwata. maca ur tezmireḍ ara ad teqneḍ akka tura acku amiḍan-ik·im ittwawḥel.
-      signed_up_but_pending: Aseɣwen n usentem ittwazen ɣer tensa-inen·inem n imayl. ticki tsenndeḍ ɣef useɣwen, ad nsenqed asnas-ik·im. ad ak·am-n-yaweḍ telɣut ma yella ittwaqbel.
-      signed_up_but_unconfirmed: Aseɣwen n usentem ittwazen ɣer tensa-inen·inem n imayl. Ttxil ḍfer aseɣwen i usentem n umiḍan-ik·im. Ttxil wali akaram n ispamen ma ur teṭṭifeḍ ara imayl-agi.
       update_needs_confirmation: Tleqmeḍ akken iwata amiḍan-ik·im, maca nesra ad nsenqed tansa-ik·im imayl tamaynut. Ttxil-k·m senqed imayl-k·m sakin ḍfer aseɣwen i usentem n n tansa imayl tamaynut. Ttxil senqed akaram n spam ma yella ur tufiḍ ara imayl-nni.
       updated: Amiḍan-ik·im yettwalqem akken iwata.
     sessions:
