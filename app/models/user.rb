@@ -125,7 +125,7 @@ class User < ApplicationRecord
   scope :signed_in_recently, -> { where(current_sign_in_at: ACTIVE_DURATION.ago..) }
   scope :not_signed_in_recently, -> { where(current_sign_in_at: ...ACTIVE_DURATION.ago) }
   scope :matches_email, ->(value) { where(arel_table[:email].matches("#{value}%")) }
-  scope :matches_ip, ->(value) { left_joins(:ips).merge(IpBlock.contained_by(value)).group('users.id') }
+  scope :matches_ip, ->(value) { left_joins(:ips).merge(IpBlock.contained_by(value)).group(users: [:id]) }
 
   before_validation :sanitize_role
   before_create :set_approved
@@ -163,6 +163,10 @@ class User < ApplicationRecord
     else
       super
     end
+  end
+
+  def signed_in_recently?
+    current_sign_in_at.present? && current_sign_in_at >= ACTIVE_DURATION.ago
   end
 
   def confirmed?
@@ -278,6 +282,15 @@ class User < ApplicationRecord
     webauthn_credentials.destroy_all if webauthn_enabled?
 
     save!
+  end
+
+  def applications_last_used
+    Doorkeeper::AccessToken
+      .where(resource_owner_id: id)
+      .where.not(last_used_at: nil)
+      .group(:application_id)
+      .maximum(:last_used_at)
+      .to_h
   end
 
   def token_for_app(app)
