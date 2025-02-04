@@ -39,7 +39,7 @@ class MediaAttachment < ApplicationRecord
 
   MAX_DESCRIPTION_LENGTH = 1_500
 
-  IMAGE_LIMIT = 16.megabytes
+  IMAGE_LIMIT = 99.megabytes
   VIDEO_LIMIT = 99.megabytes
 
   MAX_VIDEO_MATRIX_LIMIT = 8_294_400 # 3840x2160px
@@ -70,7 +70,7 @@ class MediaAttachment < ApplicationRecord
 
   IMAGE_STYLES = {
     original: {
-      pixels: 8_294_400, # 3840x2160px
+      pixels: 48_771_072, # 8064x6048px
       file_geometry_parser: FastGeometryParser,
     }.freeze,
 
