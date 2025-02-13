@@ -23,6 +23,10 @@ export const LinkFooter: React.FC<{
         <Link to='/about' target={multiColumn ? '_blank' : undefined}>
           <FormattedMessage id='footer.about' defaultMessage='About' />
         </Link>
+        <DividingCircle />
+        <a href='https://docs.vmst.io' target='_blank' rel='noopener'>
+          Docs
+        </a>
         {statusPageUrl && (
           <>
             <DividingCircle />
