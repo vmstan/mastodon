@@ -6664,12 +6664,12 @@ a.status-card {
     display: block;
     color: $white;
     border: 0;
-    background: rgba($black, 0.65);
-    backdrop-filter: blur(10px) saturate(180%) contrast(75%) brightness(70%);
+    background: rgba($black, 0.75);
+    backdrop-filter: blur(0);
     padding: 3px 12px;
-    border-radius: 99px;
-    font-size: 14px;
-    font-weight: 700;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 500;
     line-height: 20px;
   }
 }
