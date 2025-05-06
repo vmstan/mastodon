@@ -75,7 +75,7 @@ class TranslationService::DeepL < TranslationService
       Translation.new(
         text: translation['text'],
         detected_source_language: translation['detected_source_language']&.downcase,
-        provider: 'DeepL.com'
+        provider: @plan == 'pro' ? 'DeepL Pro' : 'DeepL'
       )
     end
   rescue Oj::ParseError
