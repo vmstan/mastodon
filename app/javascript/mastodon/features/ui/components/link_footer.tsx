@@ -24,8 +24,8 @@ export const LinkFooter: React.FC<{
           <FormattedMessage id='footer.about' defaultMessage='About' />
         </Link>
         <DividingCircle />
-        <a href='https://docs.vmst.io' target='_blank' rel='noopener'>
-          Docs
+        <a href='https://docs.vmst.io/funding' target='_blank' rel='noopener'>
+          Funding
         </a>
         {statusPageUrl && (
           <>
