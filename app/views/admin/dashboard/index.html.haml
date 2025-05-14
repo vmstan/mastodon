@@ -86,11 +86,19 @@
 
   .dashboard__item
     = react_admin_component :dimension,
-                            dimension: 'servers',
+                            dimension: 'space_usage',
                             end_at: @time_period.last,
-                            label: t('admin.dashboard.top_servers'),
-                            limit: 8,
+                            label: t('admin.dashboard.space'),
+                            limit: 3,
                             start_at: @time_period.first
+
+  -# .dashboard__item
+  -#   = react_admin_component :dimension,
+  -#                           dimension: 'servers',
+  -#                           end_at: @time_period.last,
+  -#                           label: t('admin.dashboard.top_servers'),
+  -#                           limit: 8,
+  -#                           start_at: @time_period.first
 
   .dashboard__item.dashboard__item--span-double-column
     = react_admin_component :retention,
@@ -98,11 +106,11 @@
                             frequency: 'month',
                             start_at: @time_period.last - 6.months
 
-  .dashboard__item.dashboard__item--span-double-row
-    = react_admin_component :trends,
-                            limit: 7
+  -# .dashboard__item.dashboard__item--span-double-row
+  -#   = react_admin_component :trends,
+  -#                           limit: 7
 
-  .dashboard__item
+  .dashboard__item.dashboard__item--span-double-column
     = react_admin_component :dimension,
                             dimension: 'software_versions',
                             end_at: @time_period.last,
@@ -110,10 +118,3 @@
                             limit: 4,
                             start_at: @time_period.first
 
-  .dashboard__item
-    = react_admin_component :dimension,
-                            dimension: 'space_usage',
-                            end_at: @time_period.last,
-                            label: t('admin.dashboard.space'),
-                            limit: 3,
-                            start_at: @time_period.first
