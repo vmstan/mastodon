@@ -98,11 +98,11 @@
                             frequency: 'month',
                             start_at: @time_period.last - 6.months
 
-  .dashboard__item.dashboard__item--span-double-row
+  .dashboard__item
     = react_admin_component :trends,
                             limit: 7
 
-  .dashboard__item
+  .dashboard__item.dashboard__item--span-double-column
     = react_admin_component :dimension,
                             dimension: 'software_versions',
                             end_at: @time_period.last,
