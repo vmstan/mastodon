@@ -5,3 +5,5 @@ Mime::Type.register 'text/xml',         :xml,  %w(application/xml application/at
 
 # WebP is not defined in Rack 2.2.
 Rack::Mime::MIME_TYPES['.webp'] = 'image/webp'
+# JXL (JPEG XL) is not defined in Rack 2.2.
+Rack::Mime::MIME_TYPES['.jxl'] = 'image/jxl'
