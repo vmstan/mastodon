@@ -872,7 +872,7 @@ export const Video: React.FC<{
                 active: paused || hovered,
               })}
             >
-              <button
+              {/* <button
                 className='media-gallery__actions__pill'
                 onClick={toggleReveal}
               >
@@ -880,7 +880,7 @@ export const Video: React.FC<{
                   id='media_gallery.hide'
                   defaultMessage='Hide'
                 />
-              </button>
+              </button> */}
             </div>
           )}
 
