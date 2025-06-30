@@ -39,7 +39,7 @@ namespace :admin do
     resource :draft, only: [:show, :update]
   end
 
-  resources :terms_of_service, only: [:index, :create, :update] do
+  resources :terms_of_service, only: [:index] do
     resource :preview, only: [:show], module: :terms_of_service
     resource :test, only: [:create], module: :terms_of_service
     resource :distribution, only: [:create], module: :terms_of_service
@@ -50,6 +50,10 @@ namespace :admin do
       post :publish
       post :unpublish
     end
+
+    resource :preview, only: [:show], module: :announcements
+    resource :test, only: [:create], module: :announcements
+    resource :distribution, only: [:create], module: :announcements
   end
 
   with_options to: redirect('/admin/settings/branding') do
@@ -87,9 +91,16 @@ namespace :admin do
       post :restart_delivery
       post :stop_delivery
     end
+
+    resources :moderation_notes, controller: 'instances/moderation_notes', only: [:create, :destroy]
   end
 
-  resources :rules, only: [:index, :create, :edit, :update, :destroy]
+  resources :rules, only: [:index, :new, :create, :edit, :update, :destroy] do
+    member do
+      post :move_up
+      post :move_down
+    end
+  end
 
   resources :webhooks do
     member do

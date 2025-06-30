@@ -22,10 +22,11 @@ Style/HashSyntax:
   EnforcedShorthandSyntax: either
   EnforcedStyle: ruby19_no_mixed_keys
 
-Style/KeywordArgumentsMerging:
-  Enabled: false
+Style/IfUnlessModifier:
+  Exclude:
+    - '**/*.haml'
 
-Style/MultipleComparison:
+Style/KeywordArgumentsMerging:
   Enabled: false
 
 Style/NumericLiterals:
@@ -57,3 +58,6 @@ Style/TrailingCommaInArrayLiteral:
 
 Style/TrailingCommaInHashLiteral:
   EnforcedStyleForMultiline: comma
+
+Style/WordArray:
+  MinSize: 3 # Override default of 2
