@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-module BulkMailer
+module BulkMailingConcern
   def push_bulk_mailer(mailer_class, mailer_method, args_array)
     raise ArgumentError, "No method #{mailer_method} on class #{mailer_class.name}" unless mailer_class.respond_to?(mailer_method)
 
     job_class = ActionMailer::MailDeliveryJob
 
     Sidekiq::Client.push_bulk({
-      'class' => ActiveJob::QueueAdapters::SidekiqAdapter::JobWrapper,
+      'class' => Sidekiq::ActiveJob::Wrapper,
       'wrapped' => job_class,
       'queue' => mailer_class.deliver_later_queue_name,
       'args' => args_array.map do |args|
