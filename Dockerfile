@@ -201,50 +201,50 @@ RUN \
   ninja; \
   ninja install;
 
-# Create temporary ffmpeg specific build layer from build layer
-FROM build AS ffmpeg
+# # Create temporary ffmpeg specific build layer from build layer
+# FROM build AS ffmpeg
 
-# ffmpeg version to compile, change with [--build-arg FFMPEG_VERSION="7.0.x"]
-# renovate: datasource=repology depName=ffmpeg packageName=openpkg_current/ffmpeg
-ARG FFMPEG_VERSION=7.1.1
-# ffmpeg download URL, change with [--build-arg FFMPEG_URL="https://ffmpeg.org/releases"]
-ARG FFMPEG_URL=https://ffmpeg.org/releases
+# # ffmpeg version to compile, change with [--build-arg FFMPEG_VERSION="7.0.x"]
+# # renovate: datasource=repology depName=ffmpeg packageName=openpkg_current/ffmpeg
+# ARG FFMPEG_VERSION=7.1.1
+# # ffmpeg download URL, change with [--build-arg FFMPEG_URL="https://ffmpeg.org/releases"]
+# ARG FFMPEG_URL=https://ffmpeg.org/releases
 
-WORKDIR /usr/local/ffmpeg/src
-# Download and extract ffmpeg source code
-ADD ${FFMPEG_URL}/ffmpeg-${FFMPEG_VERSION}.tar.xz /usr/local/ffmpeg/src/
-RUN tar xf ffmpeg-${FFMPEG_VERSION}.tar.xz;
+# WORKDIR /usr/local/ffmpeg/src
+# # Download and extract ffmpeg source code
+# ADD ${FFMPEG_URL}/ffmpeg-${FFMPEG_VERSION}.tar.xz /usr/local/ffmpeg/src/
+# RUN tar xf ffmpeg-${FFMPEG_VERSION}.tar.xz;
 
-WORKDIR /usr/local/ffmpeg/src/ffmpeg-${FFMPEG_VERSION}
+# WORKDIR /usr/local/ffmpeg/src/ffmpeg-${FFMPEG_VERSION}
 
-# Configure and compile ffmpeg
-RUN \
-  ./configure \
-  --prefix=/usr/local/ffmpeg \
-  --toolchain=hardened \
-  --disable-debug \
-  --disable-devices \
-  --disable-doc \
-  --disable-ffplay \
-  --disable-network \
-  --disable-static \
-  --enable-ffmpeg \
-  --enable-ffprobe \
-  --enable-gpl \
-  --enable-libdav1d \
-  --enable-libmp3lame \
-  --enable-libopus \
-  --enable-libsnappy \
-  --enable-libvorbis \
-  --enable-libvpx \
-  --enable-libwebp \
-  --enable-libx264 \
-  --enable-libx265 \
-  --enable-shared \
-  --enable-version3 \
-  ; \
-  make -j$(nproc); \
-  make install;
+# # Configure and compile ffmpeg
+# RUN \
+#   ./configure \
+#   --prefix=/usr/local/ffmpeg \
+#   --toolchain=hardened \
+#   --disable-debug \
+#   --disable-devices \
+#   --disable-doc \
+#   --disable-ffplay \
+#   --disable-network \
+#   --disable-static \
+#   --enable-ffmpeg \
+#   --enable-ffprobe \
+#   --enable-gpl \
+#   --enable-libdav1d \
+#   --enable-libmp3lame \
+#   --enable-libopus \
+#   --enable-libsnappy \
+#   --enable-libvorbis \
+#   --enable-libvpx \
+#   --enable-libwebp \
+#   --enable-libx264 \
+#   --enable-libx265 \
+#   --enable-shared \
+#   --enable-version3 \
+#   ; \
+#   make -j$(nproc); \
+#   make install;
 
 # Create temporary bundler specific build layer from build layer
 FROM build AS bundler
@@ -344,20 +344,20 @@ RUN \
   libwebp7 \
   libwebpdemux2 \
   libwebpmux3 \
-  # ffmpeg components
-  libdav1d7 \
-  libmp3lame0 \
-  libopencore-amrnb0 \
-  libopencore-amrwb0 \
-  libopus0 \
-  libsnappy1v5 \
-  libtheora0 \
-  libvorbis0a \
-  libvorbisenc2 \
-  libvorbisfile3 \
-  libvpx9 \
-  libx264-164 \
-  libx265-215 \
+  # # ffmpeg components
+  # libdav1d7 \
+  # libmp3lame0 \
+  # libopencore-amrnb0 \
+  # libopencore-amrwb0 \
+  # libopus0 \
+  # libsnappy1v5 \
+  # libtheora0 \
+  # libvorbis0a \
+  # libvorbisenc2 \
+  # libvorbisfile3 \
+  # libvpx9 \
+  # libx264-164 \
+  # libx265-215 \
   ;
 
 # Copy Mastodon sources into final layer
@@ -372,8 +372,8 @@ COPY --from=bundler /usr/local/bundle/ /usr/local/bundle/
 COPY --from=libvips /usr/local/libvips/bin /usr/local/bin
 COPY --from=libvips /usr/local/libvips/lib /usr/local/lib
 # Copy ffpmeg components to layer
-COPY --from=ffmpeg /usr/local/ffmpeg/bin /usr/local/bin
-COPY --from=ffmpeg /usr/local/ffmpeg/lib /usr/local/lib
+COPY --from=mwader/static-ffmpeg:8.0 /ffmpeg /usr/local/bin/
+COPY --from=mwader/static-ffmpeg:8.0 /ffprobe /usr/local/bin/
 
 RUN \
   ldconfig; \
