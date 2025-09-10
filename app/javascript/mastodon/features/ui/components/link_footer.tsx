@@ -20,6 +20,8 @@ export const LinkFooter: React.FC<{
     <div className='link-footer'>
       <p>
         <strong>{domain}</strong>:{' '}
+        <span className='version'>v{version}</span>
+        <br />
         <Link to='/about' target={multiColumn ? '_blank' : undefined}>
           <FormattedMessage id='footer.about' defaultMessage='About' />
         </Link>
@@ -72,17 +74,6 @@ export const LinkFooter: React.FC<{
             </Link>
           </>
         )}
-      </p>
-
-      <p>
-        <strong>Mastodon</strong>:{' '}
-        <a href='https://joinmastodon.org' target='_blank' rel='noopener'>
-          <FormattedMessage id='footer.about' defaultMessage='About' />
-        </a>
-        <DividingCircle />
-        <a href='https://joinmastodon.org/apps' target='_blank' rel='noopener'>
-          <FormattedMessage id='footer.get_app' defaultMessage='Get the app' />
-        </a>
         <DividingCircle />
         <Link to='/keyboard-shortcuts'>
           <FormattedMessage
@@ -97,8 +88,6 @@ export const LinkFooter: React.FC<{
             defaultMessage='View source code'
           />
         </a>
-        <DividingCircle />
-        <span className='version'>v{version}</span>
       </p>
     </div>
   );
