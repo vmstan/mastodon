@@ -19,8 +19,7 @@ export const LinkFooter: React.FC<{
   return (
     <div className='link-footer'>
       <p>
-        <strong>{domain}</strong>:{' '}
-        <span className='version'>v{version}</span>
+        <strong>v{version}</strong>
         <br />
         <Link to='/about' target={multiColumn ? '_blank' : undefined}>
           <FormattedMessage id='footer.about' defaultMessage='About' />
