@@ -19,8 +19,7 @@ export const LinkFooter: React.FC<{
   return (
     <div className='link-footer'>
       <p>
-        <strong>v{version}</strong>
-        <br />
+        <strong>{domain}</strong>:{' '}
         <Link to='/about' target={multiColumn ? '_blank' : undefined}>
           <FormattedMessage id='footer.about' defaultMessage='About' />
         </Link>
@@ -87,6 +86,8 @@ export const LinkFooter: React.FC<{
             defaultMessage='View source code'
           />
         </a>
+        <br />
+        <span className='version'>v{version}</span>
       </p>
     </div>
   );
