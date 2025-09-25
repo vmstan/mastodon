@@ -7122,12 +7122,12 @@ a.status-card {
     display: block;
     color: $white;
     border: 0;
-    background: color.change($black, $alpha: 0.65);
+    background: color.change($black, $alpha: 0.75);
     backdrop-filter: $backdrop-blur-filter;
     padding: 3px 12px;
-    border-radius: 99px;
-    font-size: 14px;
-    font-weight: 700;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 500;
     line-height: 20px;
   }
 }
@@ -7147,12 +7147,12 @@ a.status-card {
   text-align: center;
   color: $white;
   border: 0;
-  background: color.change($black, $alpha: 0.65);
+  background: color.change($black, $alpha: 0.75);
   backdrop-filter: $backdrop-blur-filter;
   padding: 3px 8px;
   border-radius: 4px;
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 500;
   z-index: 1;
   line-height: 20px;
   cursor: pointer;
