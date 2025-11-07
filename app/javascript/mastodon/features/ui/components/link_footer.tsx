@@ -26,6 +26,10 @@ export const LinkFooter: React.FC<{
             defaultMessage='About'
           />
         </Link>
+        <DividingCircle />
+        <a href='https://docs.vmst.io/funding' target='_blank' rel='noopener'>
+          Funding
+        </a>
         {statusPageUrl && (
           <>
             <DividingCircle />
@@ -71,17 +75,6 @@ export const LinkFooter: React.FC<{
             </Link>
           </>
         )}
-      </p>
-
-      <p>
-        <strong>Mastodon</strong>:{' '}
-        <a href='https://joinmastodon.org' target='_blank' rel='noopener'>
-          <FormattedMessage id='footer.about' defaultMessage='About' />
-        </a>
-        <DividingCircle />
-        <a href='https://joinmastodon.org/apps' target='_blank' rel='noopener'>
-          <FormattedMessage id='footer.get_app' defaultMessage='Get the app' />
-        </a>
         <DividingCircle />
         <Link to='/keyboard-shortcuts'>
           <FormattedMessage
@@ -96,7 +89,7 @@ export const LinkFooter: React.FC<{
             defaultMessage='View source code'
           />
         </a>
-        <DividingCircle />
+        <br />
         <span className='version'>v{version}</span>
       </p>
     </div>
