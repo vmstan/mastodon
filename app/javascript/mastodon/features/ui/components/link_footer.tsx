@@ -19,7 +19,7 @@ export const LinkFooter: React.FC<{
   return (
     <div className='link-footer'>
       <p>
-        <strong>{domain}</strong>:{' '}
+        {/* <strong>{domain}</strong>:{' '} */}
         <Link to='/about' target={multiColumn ? '_blank' : undefined}>
           <FormattedMessage id='footer.about' defaultMessage='About' />
         </Link>
@@ -41,7 +41,7 @@ export const LinkFooter: React.FC<{
             <Link to='/directory'>
               <FormattedMessage
                 id='footer.directory'
-                defaultMessage='Profiles directory'
+                defaultMessage='Directory'
               />
             </Link>
           </>
@@ -54,7 +54,7 @@ export const LinkFooter: React.FC<{
         >
           <FormattedMessage
             id='footer.privacy_policy'
-            defaultMessage='Privacy policy'
+            defaultMessage='Privacy'
           />
         </Link>
         {termsOfServiceEnabled && (
@@ -67,7 +67,7 @@ export const LinkFooter: React.FC<{
             >
               <FormattedMessage
                 id='footer.terms_of_service'
-                defaultMessage='Terms of service'
+                defaultMessage='Terms of Service'
               />
             </Link>
           </>
@@ -76,14 +76,14 @@ export const LinkFooter: React.FC<{
         <Link to='/keyboard-shortcuts'>
           <FormattedMessage
             id='footer.keyboard_shortcuts'
-            defaultMessage='Keyboard shortcuts'
+            defaultMessage='Shortcuts'
           />
         </Link>
         <DividingCircle />
         <a href={source_url} rel='noopener' target='_blank'>
           <FormattedMessage
             id='footer.source_code'
-            defaultMessage='View source code'
+            defaultMessage='Source'
           />
         </a>
         <br />
