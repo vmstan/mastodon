@@ -41,7 +41,7 @@ export const AnnualReportNavItem: FC = () => {
       onClick={handleClick}
     >
       <Icon icon={IconPlanet} id='wrapstodon-planet' width='24' height='24' />
-      <span>Wrapstodon {year}</span>
+      <span>Wrapstodon</span>
       <span className={classNames('column-link__badge', classes.navItemBadge)}>
         <FormattedMessage
           id='annual_report.nav_item.badge'
