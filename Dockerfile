@@ -244,7 +244,7 @@ RUN \
   make install;
 
 # Create temporary build layer from base image for Ruby dependencies
-FROM ruby AS build
+FROM ruby AS ruby-build
 
 ARG TARGETPLATFORM
 
@@ -277,7 +277,7 @@ RUN \
   ;
 
 # Create temporary bundler specific build layer from build layer
-FROM build AS bundler
+FROM ruby-build AS bundler
 
 ARG TARGETPLATFORM
 
@@ -305,7 +305,7 @@ RUN \
   bundle install -j"$(nproc)";
 
 # Create temporary assets build layer from build layer
-FROM build AS precompiler
+FROM ruby-build AS precompiler
 
 ARG TARGETPLATFORM
 
