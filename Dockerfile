@@ -134,11 +134,10 @@ SHELL ["/bin/bash", "-o", "pipefail", "-o", "errexit", "-c"]
 
 # hadolint ignore=DL3008
 RUN \
-  # Remove automatic apt cache Docker cleanup scripts
-  rm -f /etc/apt/apt.conf.d/docker-clean; \
-  # Mount Apt cache and lib directories from Docker buildx caches
   --mount=type=cache,id=apt-native-cache-${TARGETPLATFORM},target=/var/cache/apt,sharing=locked \
   --mount=type=cache,id=apt-native-lib-${TARGETPLATFORM},target=/var/lib/apt,sharing=locked \
+  # Remove automatic apt cache Docker cleanup scripts
+  rm -f /etc/apt/apt.conf.d/docker-clean; \
   # Install build tools for native libraries
   apt-get update; \
   apt-get install -y --no-install-recommends \
