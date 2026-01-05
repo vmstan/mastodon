@@ -274,19 +274,6 @@ RUN \
   pkg-config \
   shared-mime-info \
   xz-utils \
-  # libvips components (for ruby-vips gem)
-  libcgif-dev \
-  libexif-dev \
-  libexpat1-dev \
-  libgirepository1.0-dev \
-  libheif-dev \
-  libhwy-dev \
-  libimagequant-dev \
-  libjpeg62-turbo-dev \
-  liblcms2-dev \
-  libspng-dev \
-  libtiff-dev \
-  libwebp-dev \
   ;
 
 # Create temporary bundler specific build layer from build layer
