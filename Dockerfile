@@ -106,6 +106,7 @@ RUN \
   apt-get dist-upgrade -yq; \
   # Install jemalloc, curl and other necessary components
   apt-get install -y --no-install-recommends \
+  # system utilities
   curl \
   file \
   libjemalloc2 \
@@ -114,6 +115,42 @@ RUN \
   tini \
   tzdata \
   wget \
+  # mastodon components
+  libexpat1 \
+  libglib2.0-0t64 \
+  libicu76 \
+  libidn12 \
+  libpq5 \
+  libreadline8t64 \
+  libssl3t64 \
+  libyaml-0-2 \
+  # libvips components
+  libcgif0 \
+  libexif12 \
+  libheif1 \
+  libhwy1t64 \
+  libimagequant0 \
+  libjpeg62-turbo \
+  liblcms2-2 \
+  libspng0 \
+  libtiff6 \
+  libwebp7 \
+  libwebpdemux2 \
+  libwebpmux3 \
+  # ffmpeg components
+  libdav1d7 \
+  libmp3lame0 \
+  libopencore-amrnb0 \
+  libopencore-amrwb0 \
+  libopus0 \
+  libsnappy1v5 \
+  libtheora0 \
+  libvorbis0a \
+  libvorbisenc2 \
+  libvorbisfile3 \
+  libvpx9 \
+  libx264-164 \
+  libx265-215 \
   ; \
   # Patch Ruby to use jemalloc
   patchelf --add-needed libjemalloc.so.2 /usr/local/bin/ruby; \
@@ -348,53 +385,6 @@ RUN \
 FROM ruby AS mastodon
 
 ARG TARGETPLATFORM
-
-# hadolint ignore=DL3008
-RUN \
-  # Mount Apt cache and lib directories from Docker buildx caches
-  --mount=type=cache,id=apt-cache-${TARGETPLATFORM},target=/var/cache/apt,sharing=locked \
-  --mount=type=cache,id=apt-lib-${TARGETPLATFORM},target=/var/lib/apt,sharing=locked \
-  # Mount Corepack and Yarn caches from Docker buildx caches
-  --mount=type=cache,id=corepack-cache-${TARGETPLATFORM},target=/usr/local/share/.cache/corepack,sharing=locked \
-  --mount=type=cache,id=yarn-cache-${TARGETPLATFORM},target=/usr/local/share/.cache/yarn,sharing=locked \
-  # Apt update install non-dev versions of necessary components
-  apt-get install -y --no-install-recommends \
-  libexpat1 \
-  libglib2.0-0t64 \
-  libicu76 \
-  libidn12 \
-  libpq5 \
-  libreadline8t64 \
-  libssl3t64 \
-  libyaml-0-2 \
-  # libvips components
-  libcgif0 \
-  libexif12 \
-  libheif1 \
-  libhwy1t64 \
-  libimagequant0 \
-  libjpeg62-turbo \
-  liblcms2-2 \
-  libspng0 \
-  libtiff6 \
-  libwebp7 \
-  libwebpdemux2 \
-  libwebpmux3 \
-  # ffmpeg components
-  libdav1d7 \
-  libmp3lame0 \
-  libopencore-amrnb0 \
-  libopencore-amrwb0 \
-  libopus0 \
-  libsnappy1v5 \
-  libtheora0 \
-  libvorbis0a \
-  libvorbisenc2 \
-  libvorbisfile3 \
-  libvpx9 \
-  libx264-164 \
-  libx265-215 \
-  ;
 
 # Copy Mastodon sources into final layer
 COPY . /opt/mastodon/
