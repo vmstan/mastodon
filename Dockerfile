@@ -101,8 +101,10 @@ RUN \
   # Mount Apt cache and lib directories from Docker buildx caches
   --mount=type=cache,id=apt-cache-${TARGETPLATFORM},target=/var/cache/apt,sharing=locked \
   --mount=type=cache,id=apt-lib-${TARGETPLATFORM},target=/var/lib/apt,sharing=locked \
-  # Install jemalloc, curl and other necessary components
+  # Update package list and upgrade system packages
   apt-get update; \
+  apt-get dist-upgrade -yq; \
+  # Install jemalloc and other necessary components
   apt-get install -y --no-install-recommends \
   curl \
   file \
@@ -156,9 +158,7 @@ RUN \
   patchelf \
   ;
 
-# Separate build stage for native libraries (libvips, ffmpeg)
-# This stage is isolated from Ruby to improve caching - these libraries
-# only need to rebuild when their versions or build dependencies change
+# Debian build stage for media libraries (libvips, ffmpeg)
 FROM ${BASE_REGISTRY}/debian:${DEBIAN_VERSION}-slim AS native-build
 
 ARG TARGETPLATFORM
@@ -415,15 +415,6 @@ RUN \
   chown mastodon:mastodon /opt/mastodon/public/system; \
   # Set Mastodon user as owner of tmp folder
   chown -R mastodon:mastodon /opt/mastodon/tmp;
-
-# hadolint ignore=DL3008,DL3005
-RUN \
-  # Mount Apt cache and lib directories from Docker buildx caches
-  --mount=type=cache,id=apt-cache-${TARGETPLATFORM},target=/var/cache/apt,sharing=locked \
-  --mount=type=cache,id=apt-lib-${TARGETPLATFORM},target=/var/lib/apt,sharing=locked \
-  # Apt update & upgrade to check for security updates to Debian image
-  apt-get update; \
-  apt-get dist-upgrade -yq;
 
 # Set the running user for resulting container
 USER mastodon
