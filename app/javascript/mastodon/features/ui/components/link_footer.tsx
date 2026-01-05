@@ -90,18 +90,22 @@ export const LinkFooter: React.FC<{
             defaultMessage='Keyboard shortcuts'
           />
         </Link>
-        <DividingCircle />
-        <a href={source_url} rel='noopener' target='_blank'>
-          <FormattedMessage
-            id='footer.source_code'
-            defaultMessage='View source code'
-          />
-        </a>
+        {!source_commit && (
+          <>
+            <DividingCircle />
+            <a href={source_url} rel='noopener' target='_blank'>
+              <FormattedMessage
+                id='footer.source_code'
+                defaultMessage='View source code'
+              />
+            </a>
+          </>
+        )}
         <DividingCircle />
         <span className='version'>
           v{version}
           {source_commit &&
-            ` (<a href='https://github.com/mastodon/mastodon/commit/${source_commit}' target='_blank' rel='noopener'>${source_commit.slice(0, 7)}</a>)`}
+            ` (<a href='${source_url}/commit/${source_commit}' target='_blank' rel='noopener'>${source_commit.slice(0, 7)}</a>)`}
         </span>
       </p>
     </div>
