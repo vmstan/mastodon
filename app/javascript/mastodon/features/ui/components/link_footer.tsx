@@ -100,7 +100,8 @@ export const LinkFooter: React.FC<{
         <DividingCircle />
         <span className='version'>
           v{version}
-          {source_commit && ` (${source_commit})`}
+          {source_commit &&
+            ` (<a href='https://github.com/mastodon/mastodon/commit/${source_commit}' target='_blank' rel='noopener'>${source_commit.slice(0, 7)}</a>)`}
         </span>
       </p>
     </div>
