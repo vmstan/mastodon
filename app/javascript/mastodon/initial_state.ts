@@ -44,6 +44,7 @@ interface InitialStateMeta {
   use_blurhash: boolean;
   use_pending_items?: boolean;
   version: string;
+  source_commit: string;
   sso_redirect: string;
   status_page_url: string;
   terms_of_service_enabled: boolean;
@@ -131,6 +132,7 @@ export const landingPage = getMeta('landing_page');
 export const useBlurhash = getMeta('use_blurhash');
 export const usePendingItems = getMeta('use_pending_items');
 export const version = getMeta('version');
+export const source_commit = getMeta('source_commit');
 export const criticalUpdatesPending = initialState?.critical_updates_pending;
 export const statusPageUrl = getMeta('status_page_url');
 export const sso_redirect = getMeta('sso_redirect');

@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import {
   domain,
   version,
+  source_commit,
   source_url,
   statusPageUrl,
   profile_directory as canProfileDirectory,
@@ -97,7 +98,9 @@ export const LinkFooter: React.FC<{
           />
         </a>
         <DividingCircle />
-        <span className='version'>v{version}</span>
+        <span className='version'>
+          v{version} {source_commit}
+        </span>
       </p>
     </div>
   );
