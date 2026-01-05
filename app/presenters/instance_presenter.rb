@@ -74,6 +74,10 @@ class InstancePresenter < ActiveModelSerializers::Model
     Mastodon::Version.source_url
   end
 
+  def source_commit
+    Mastodon::Version.source_commit
+  end
+
   def thumbnail
     @thumbnail ||= Rails.cache.fetch('site_uploads/thumbnail') { SiteUpload.find_by(var: 'thumbnail') }
   end

@@ -99,7 +99,7 @@ export const LinkFooter: React.FC<{
         </a>
         <DividingCircle />
         <span className='version'>
-          v{version} {source_commit}
+          v{version} ({source_commit})
         </span>
       </p>
     </div>

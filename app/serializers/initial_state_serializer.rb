@@ -120,6 +120,7 @@ class InitialStateSerializer < ActiveModel::Serializer
       search_enabled: Chewy.enabled?,
       single_user_mode: Rails.configuration.x.single_user_mode,
       source_url: instance_presenter.source_url,
+      source_commit: instance_presenter.source_commit,
       sso_redirect: sso_redirect,
       status_page_url: Setting.status_page_url,
       streaming_api_base_url: Rails.configuration.x.streaming_api_base_url,
