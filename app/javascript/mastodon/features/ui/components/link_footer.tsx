@@ -104,8 +104,20 @@ export const LinkFooter: React.FC<{
         <DividingCircle />
         <span className='version'>
           v{version}
-          {source_commit &&
-            ` (<a href='${source_url}/commit/${source_commit}' target='_blank' rel='noopener'>${source_commit.slice(0, 7)}</a>)`}
+          {source_commit && (
+            <>
+              {' '}
+              (
+              <a
+                href={`${source_url}/commit/${source_commit}`}
+                target='_blank'
+                rel='noopener'
+              >
+                {source_commit.slice(0, 7)}
+              </a>
+              )
+            </>
+          )}
         </span>
       </p>
     </div>
