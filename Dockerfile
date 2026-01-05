@@ -415,7 +415,7 @@ RUN \
   chown mastodon:mastodon /opt/mastodon/public/system; \
   # Set Mastodon user as owner of tmp folder
   chown -R mastodon:mastodon /opt/mastodon/tmp;
-  
+
 # hadolint ignore=DL3008,DL3005
 RUN \
   # Mount Apt cache and lib directories from Docker buildx caches
@@ -423,8 +423,7 @@ RUN \
   --mount=type=cache,id=apt-lib-${TARGETPLATFORM},target=/var/lib/apt,sharing=locked \
   # Apt update & upgrade to check for security updates to Debian image
   apt-get update; \
-  apt-get dist-upgrade -yq; \
-  ;
+  apt-get dist-upgrade -yq;
 
 # Set the running user for resulting container
 USER mastodon
