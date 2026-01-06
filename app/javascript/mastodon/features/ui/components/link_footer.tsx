@@ -90,23 +90,30 @@ export const LinkFooter: React.FC<{
             defaultMessage='Keyboard shortcuts'
           />
         </Link>
+        {!source_commit && (
+          <>
+            <DividingCircle />
+            <a href={source_url} rel='noopener' target='_blank'>
+              <FormattedMessage
+                id='footer.source_code'
+                defaultMessage='View source code'
+              />
+            </a>
+          </>
+        )}
+        {source_commit && (
+          <>
+            <DividingCircle />
+            <a
+              href={`${source_url}/commit/${source_commit}`}
+              target='_blank'
+              rel='noopener'
+            >
+              {source_commit.slice(0, 7)}
+            </a>
+          </>
+        )}
         <DividingCircle />
-        <a
-          href={
-            source_commit ? `${source_url}/commit/${source_commit}` : source_url
-          }
-          target='_blank'
-          rel='noopener'
-        >
-          {source_commit ? (
-            source_commit.slice(0, 12)
-          ) : (
-            <FormattedMessage
-              id='footer.source_code'
-              defaultMessage='View source code'
-            />
-          )}
-        </a>{' '}
         <span className='version'>v{version}</span>
       </p>
     </div>
