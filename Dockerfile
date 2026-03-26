@@ -265,6 +265,8 @@ RUN \
   bundle config set silence_root_warning "true"; \
   # Download and install required Gems
   bundle install -j"$(nproc)";
+  
+RUN gem install thruster
 
 # Create temporary assets build layer from build layer
 FROM build AS precompiler
