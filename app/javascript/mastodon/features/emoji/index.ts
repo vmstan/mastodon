@@ -21,7 +21,7 @@ export async function initializeEmoji() {
   let tempWorker: Worker | null = null;
   if (!worker && 'Worker' in window) {
     try {
-      const { default: EmojiWorker } = await import('./worker?worker&inline');
+      const { default: EmojiWorker } = await import('./worker?worker');
       tempWorker = new EmojiWorker();
     } catch (err) {
       console.warn('Error creating web worker:', err);
