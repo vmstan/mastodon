@@ -117,7 +117,7 @@ export const config: UserConfigFnPromise = async ({ mode, command }) => {
     build: {
       commonjsOptions: { transformMixedEsModules: true },
       chunkSizeWarningLimit: 1 * 1024 * 1024, // 1MB
-      sourcemap: true,
+      sourcemap: mode !== 'production',
       emptyOutDir: mode !== 'production',
       manifest: true,
       outDir,
