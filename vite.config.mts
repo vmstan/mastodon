@@ -23,6 +23,7 @@ import { MastodonAssetsManifest } from './config/vite/plugin-assets-manifest';
 import { MastodonEmojiCompressed } from './config/vite/plugin-emoji-compressed';
 import { MastodonThemes } from './config/vite/plugin-mastodon-themes';
 import { MastodonNameLookup } from './config/vite/plugin-name-lookup';
+import { MastodonStripSourceMappingURL } from './config/vite/plugin-strip-sourcemap-url';
 import { MastodonServiceWorkerLocales } from './config/vite/plugin-sw-locales';
 
 const jsRoot = path.resolve(__dirname, 'app/javascript');
@@ -183,6 +184,11 @@ export const config: UserConfigFnPromise = async ({ mode, command }) => {
         renderLegacyChunks: false,
         modernPolyfills: true,
       }),
+      // When source maps are disabled, strip any `sourceMappingURL` comments
+      // that leak in from URL-imported assets (e.g. tesseract.js' pre-built
+      // worker) so the browser does not 404 on a missing `.map` file.
+      process.env.DISABLE_SOURCEMAPS === 'true' &&
+        MastodonStripSourceMappingURL(),
       isProdBuild && (Compress() as PluginOption),
       command === 'build' &&
         manifestSRI({
