@@ -362,7 +362,10 @@ COPY --from=bundler /usr/local/bundle/ /usr/local/bundle/
 RUN \
   ldconfig; \
   # Use Ruby on Rails to create Mastodon assets
+  # DISABLE_SOURCEMAPS prevents Vite from generating and shipping source maps
+  # with the production image.
   SECRET_KEY_BASE_DUMMY=1 \
+  DISABLE_SOURCEMAPS=true \
   bundle exec rails assets:precompile; \
   # Cleanup temporary files
   rm -fr /opt/mastodon/tmp;
