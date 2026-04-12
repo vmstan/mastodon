@@ -381,6 +381,9 @@ COPY . /opt/mastodon/
 # Copy compiled assets to layer
 COPY --from=precompiler /opt/mastodon/public/packs /opt/mastodon/public/packs
 COPY --from=precompiler /opt/mastodon/public/assets /opt/mastodon/public/assets
+# Remove the sw.js.map symlink since source maps are not generated in
+# production builds — without this the dangling symlink causes 404s.
+RUN rm -f /opt/mastodon/public/sw.js.map
 # Copy bundler components to layer
 COPY --from=bundler /usr/local/bundle/ /usr/local/bundle/
 # Copy libvips components to layer
